@@ -1,0 +1,713 @@
+﻿@using ViewModels.Common
+@model ApiResult<IEnumerable<ViewModels.Catalog.Papers.PaperViewModel>>
+@section Scripts{
+   @* <script src="~/js/jsControllers/knifeController/Index.js"></script>*@
+}
+<div class="row">
+    <div class="col-8">
+        @* <h1>@ViewData["Title"]</h1>*@
+        <h1 class="text-secondary font-weight-bolder">Danh sách giấy</h1>
+    </div>
+    @* <div class="col-4 d-flex justify-content-center">
+        @if (TempData["ResultOk"] != null)
+        {
+        <h4 aria-hidden="true" id="alertMesss" class="alert-success">@TempData["ResultOk"]</h4>
+        }
+        else
+        {
+        <h4 type="button" class="close" data-dismiss="alert" aria-label="Close">
+        </h4>
+        }
+        </div>*@
+    <div class="container-fluid">
+        <div class="row">
+
+            <form method="get" enctype="multipart/form-data" class="mb-1 w-100">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Độ dày giấy</div>
+                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">
+                        <input type="number" class="form-control border-0 small" name="paperThick" id="soleThick" value="@ViewData["paperThick"]" aria-describedby="basic-addon2" />
+                    </div>
+                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Tên hàng</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-right">
+                        @Html.DropDownList("paperTypeList", null, new { @class = "form-control d-sm-inline-block", @id = "paperTypeListSearch", @name = "paperTypeListSearch" })
+                    </div>
+
+                     <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Loại</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-right">
+                        @Html.DropDownList("paperTypeMainList", null, new { @class = "form-control d-sm-inline-block", @id = "paperTypeMainListSearch", @name = "paperTypeMainListSearch" })
+                    </div>
+
+                      <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Đế</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-right">
+                        @Html.DropDownList("soleList", null, new { @class = "form-control d-sm-inline-block", @id = "soleListSearch", @name = "soleListSearch" })
+                    </div>
+
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 float-right">
+                         <button class="btn btn-primary" type="submit" id="btnSearch">
+                            Tìm kiếm
+                            </button>
+                        <a class="btn btn-success" onclick="show(0)" data-toggle="modal" data-target="#myModal">
+                            Thêm mới
+                        </a>
+
+
+                        @* @if (Model.Count() > 0)
+                            {
+                            <a class="btn btn-info ml-2" id="btnExport">
+                            Export Excel
+                            </a>
+                            }*@
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class=" table-responsive tableFixHead" style="max-height:750px; overflow-y:scroll;">
+        <table class="table table-bordered  table-hover" cellspacing="0" width="100%" style="overflow-x:scroll;  border-spacing: 0px;" id="table_id">
+            <thead>
+                <tr>
+                    <th scope="col"><b style="opacity:0%;">..................</b>#<b style="opacity:0%;">..................</b></th>
+                    @*<th scope="col"><b style="opacity:0%;"></b>Tênkeo<b style="opacity:0%;"></b></th>*@
+                    <th scope="col"><b style="opacity:0%;"></b>Nhàcungcấp<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Tênhàng<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Loại<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;">........</b>Đếgiấy<b style="opacity:0%;">........</b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Mãhàng<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Chấtliệukeo<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Mụcđíchdùng<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Đặctính<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Đơngiá<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>ĐVT<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Độdàygiấy<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Độdàyđế<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Tổngđộdày<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Địnhlượnggiấy<b style="opacity:0%;"></b></th>
+
+                    @* <th scope="col"><b style="opacity:0%;"></b>Mãhàng<b style="opacity:0%;"></b></th>*@
+
+
+                </tr>
+            </thead>
+            <tbody style="font-size:12px;">
+
+                @*<tr class="@(item.IsDeleted == true?"text-danger":"")">*@
+                @if (Model.ResultObj.Count() > 0)
+                {
+
+                    @foreach (var item in Model.ResultObj)
+                    {
+                        <tr class="">
+                            <td class="p-0 text-center" style="font-size:10px; line-height:13px;">
+                                <a class="btn btn-sm btn-info" onclick="show(@item.ID)" data-toggle="modal" data-target="#myModal">Sửa</a>
+                                <a class="btn btn-sm btn-warning" onclick="showPrice(@item.ID)" data-toggle="modal" data-target="#updatePriceModal">Chỉnh giá</a>
+                                <a class="btn btn-sm btn-danger" onclick="deleteData(@item.ID)">Xóa</a>
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Supplier
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.PaperTypeName
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.PaperTypeMainName
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.SoleName
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.PaperName
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.GlueName
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Purpose
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Characteristic
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Price
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Unit
+                            </td>
+                             <td class="p-0 text-center">
+                                @item.SurfaceThick
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.SoleThick
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.SoleBaseThick
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.TotalThick
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="4">Không có dữ liệu</td></tr>
+                }
+                @* <tr class="">
+                    <td class="p-0 text-center">
+                    <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal">Sửa</a>
+                    <a class="btn btn-sm btn-danger" onclick="deleteData()">Xóa</a>
+                    </td>
+                    <td class="p-0 text-center">
+                    Keo hotmelt
+                    </td>
+                    <td class="p-0 text-center">
+                    H
+                    </td>
+                    <td class="p-0 text-center">
+                    Keo hotmelt dùng để....
+                    </td>
+                    </tr>*@
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl modal-lg model-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body container">
+                <h3 class="plan-title text-center">Thông tin giấy</h3>
+                <div class="row general">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-sm-12 mb-8">
+
+                        <div class="edit-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="ID" value="0" />
+
+
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">B-Code:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="bCode" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Nhà cung cấp:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="supplier" />
+                                </div>
+
+                                <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                                    <label class="control-label  label-text">Loại:</label>
+                                    @Html.DropDownList("paperTypeMainList", null, new { @class = "form-control d-sm-inline-block", @id = "paperTypeMainList", @name = "paperTypeMainList" })
+                                </div>
+
+                                        <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                                    <label class="control-label  label-text">Loại hàng:</label>
+                                    @Html.DropDownList("paperTypeList", null, new { @class = "form-control d-sm-inline-block", @id = "paperTypeList", @name = "paperTypeList" })
+                                </div>
+
+                                <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                                    <label class="control-label  label-text">Đế giấy:</label>
+                                    @Html.DropDownList("soleList", null, new { @class = "form-control d-sm-inline-block", @id = "soleList", @name = "soleList" })
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Mã hàng:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="paperCode" />
+                                </div>
+
+                                <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                                    <label class="control-label  label-text">Keo:</label>
+                                    @Html.DropDownList("glueList", null, new { @class = "form-control d-sm-inline-block", @id = "glueList", @name = "glueList" })
+                                </div>
+
+                                <div class="form-group col-md-4 col-lg-4 col-sm-4 col-xl-4  mb-1">
+                                    <label class="control-label  label-text">Mục đích dùng:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="purpose">
+                                </div>
+
+                                <div class="form-group col-md-4 col-lg-4 col-sm-4 col-xl-4  mb-1">
+                                    <label class="control-label  label-text">Đặc tính:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="characteristic">
+                                </div>
+
+                               @* <div class="form-group col-md-4 col-lg-4 col-sm-4 col-xl-4  mb-1">
+                                    <label class="control-label  label-text">Khổ giấy:</label>
+                                    <input type="hidden" class="form-inline form-control  d-sm-inline-block" id="paperSize">
+                                </div>*@
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="price">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">ĐVT:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="unit">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <label class="control-label  label-text">Độ dày giấy(gsm):</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="surfaceThick" value="0">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <label class="control-label  label-text">Độ dày đế(gsm):</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="soleThick" value="0">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <label class="control-label  label-text">Độ dày đế keo:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="glueSoleThick" value="0">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <label class="control-label  label-text">Độ dày đế keo:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="totalThick" disabled="disabled" value="0">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Định lượng giấy:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="quantitative" value="0">
+                                </div>
+
+                               @* <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Mã loại decal:</label>
+                                    <input type="hidden" class="form-inline form-control  d-sm-inline-block" id="paperTypeCode">
+                                </div>*@
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <label class="control-label  label-text">Lõi:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="core">
+                                </div>
+
+                                <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xl-6 mb-1">
+                                    <label class="control-label  label-text">Ghi chú:</label>
+                                    <input type="hidden" class="form-inline form-control  d-sm-inline-block" id="note">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" id="action">
+                                <input type="button" value="Lưu" onclick="save();" class="btn btn-primary" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="updatePriceModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl modal-lg model-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body container">
+                <h3 class="plan-title text-center">Thông tin giấy</h3>
+                <div class="row general">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-sm-12 mb-8">
+
+                        <div class="edit-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="updateID" value="0" />
+
+
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá cũ:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="oldPrice" disabled="disabled">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá mới:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="newPrice">
+                                </div>
+
+                                <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xl-6 mb-1">
+                                    <label class="control-label  label-text">Ghi chú:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="noteUpdate">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" id="action">
+                                <input type="button" value="Lưu" onclick="updatePrice();" class="btn btn-primary" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+        function save() {
+        if (confirm("Bạn có chắc chắn muốn lưu?") == true) {
+            var data = new FormData();
+            //var fileUpload = $("#attachment").get(0);
+            //var countFile = $("#attachment")[0].files.length;
+            //var files = fileUpload.files;
+             var id = $("#ID").val();
+             var url;
+             if(id <= 0)
+             {
+                  url = "/Paper/CreatePaper";
+                  method ="POST";
+             }
+             else{
+                  url = "/Paper/UpdatePaper/"+id;
+                   method ="POST";
+             }
+
+            //$("#productId").val(0);
+
+          // var soleName = $("#soleName").val();
+            var supplier = $("#supplier").val();
+            var bCode = $("#bCode").val();
+            var paperTypeId = $("#paperTypeList option:selected").val();
+            var paperTypeName =  $("#paperTypeList option:selected").text();
+            var paperTypeCode = "";
+            var paperTypeMainId = $("#paperTypeMainList option:selected").val();
+            var paperTypeMainName = $("#paperTypeMainList option:selected").text();
+            var paperTypeMainCode = "";
+            
+            var soleId = $("#soleList option:selected").val();
+            var soleName = $("#soleList option:selected").text();
+            var paperCode = $("#paperCode").val();
+            var glueId = $("#glueList option:selected").val();
+            var glueName = $("#glueList option:selected").text();
+            var purpose = $("#purpose").val();
+            var characteristic = $("#characteristic").val();
+            //var paperSize = $("#paperSize").val();
+            var price = $("#price").val();
+            var unit = $("#unit").val();
+            var surfaceThick = $("#surfaceThick").val();
+            var soleThick = $("#soleThick").val();
+            var glueSoleThick = $("#glueSoleThick").val();
+            var quantitative = $("#quantitative").val();
+            var note = $("#note").val();
+            var core = $("#core").val();
+           // var paperTypeCode = $("#paperTypeCode").val();
+
+            if(id>0)
+            {price = null;}
+
+            var model = { ID: id, Supplier: supplier, BCode: bCode, PaperTypeID: paperTypeId, PaperTypeName: paperTypeName,PaperTypeCode: paperTypeCode, PaperTypeMainID: paperTypeMainId, PaperTypeMainName: paperTypeMainName, PaperTypeMainCode: paperTypeMainCode, SoleID: soleId, SoleName: soleName, PaperName:paperCode, GlueID: glueId, GlueName: glueName, Purpose: purpose, Characteristic: characteristic, Unit: unit, SurfaceThick: surfaceThick, SoleBaseThick: glueSoleThick, SoleThick: soleThick, QuantitativePaper: quantitative, Price: price, Core: core, Note:note };
+            console.log(model);
+            $.ajax({
+                type: method,
+                url: url,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(model),
+                async: true,
+                success: function (mess) {
+                    if (mess.isSuccessResult == false) {
+                        $("#msg").removeClass("text-success");
+                        $("#msg").addClass("text-danger");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                    }
+                    else {
+                        $("#msg").removeClass("text-danger");
+                        $("#msg").addClass("text-success");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                        location.reload();
+                    }
+
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+
+                },
+                error: function (err) {
+
+                    $("#msg").removeClass("text-success");
+                    $("#msg").addClass("text-danger");
+                    $("#msg").html("Error: " + err);
+                    alert(err.responseText);
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+                }
+
+            });
+        }
+    }
+</script>
+
+<script type="text/javascript">
+
+        function updatePrice() {
+        if (confirm("Bạn có chắc chắn muốn lưu?") == true) {
+            var data = new FormData();
+            //var fileUpload = $("#attachment").get(0);
+            //var countFile = $("#attachment")[0].files.length;
+            //var files = fileUpload.files;
+             var id = $("#updateID").val();
+             var url;
+
+                  url = "/Paper/UpdatePaperPrice/"+id;
+                   method ="POST";
+            //$("#productId").val(0);
+
+          // var soleName = $("#soleName").val();
+            var oldPrice = $("#oldPrice").val();
+            var newPrice = $("#newPrice").val();
+            var note = $("#noteUpdate").val();
+
+            var model = { ID: id, OldPrice: oldPrice, NewPrice: newPrice, Note:note };
+            console.log(model);
+            $.ajax({
+                type: method,
+                url: url,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(model),
+                async: true,
+                success: function (mess) {
+                    if (mess.isSuccessResult == false) {
+                        $("#msg").removeClass("text-success");
+                        $("#msg").addClass("text-danger");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                    }
+                    else {
+                        $("#msg").removeClass("text-danger");
+                        $("#msg").addClass("text-success");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                        location.reload();
+                    }
+
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+
+                },
+                error: function (err) {
+
+                    $("#msg").removeClass("text-success");
+                    $("#msg").addClass("text-danger");
+                    $("#msg").html("Error: " + err);
+                    alert(err.responseText);
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+                }
+
+            });
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    function deleteData(id) {
+       if (confirm('Bạn có chắc chắn muốn xóa?')) {
+            var url = "/Paper/DeletePaper/" + id;
+
+    $.ajax({
+        type: "DELETE",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+
+                if (mess.isSuccessResult == false) {
+                    //$("#alertMesss").removeClass("text-success");
+                    //$("#alertMesss").addClass("text-danger");
+                    //$("#alertMesss").html(mess.result);
+                    alert(mess.result);
+                }
+                else {
+                    //$("#alertMesss").removeClass("text-danger");
+                    //$("#alertMesss").addClass("text-success");
+                    //$("#alertMesss").html(mess.result);
+                    alert(mess.result);
+                }
+                location.reload();
+
+            },
+            error: function (err) {
+                //$("#alertMesss").removeClass("text-success");
+                //$("#alertMesss").addClass("text-danger");
+                //$("#alertMesss").html("Error: " + err);
+                alert("Error: " + err);
+            }
+
+    });
+       } else {
+           return false;
+       }
+    }
+</script>
+
+<script type="text/javascript">
+    function show(id) {
+
+       if(id ==0){
+             $('#ID').val(0);
+           // $('#glueName').val("");
+            $('#paperTypeMainName').val("");
+            $('#paperTypeMainCode').val("");
+            $("#supplier").val("");
+            $("#bCode").val();
+            $("#paperTypeList > [value='0']").attr("selected",true);
+            $("#paperTypeMainList > [value='0']").attr("selected",true);
+            $("#soleList > [value='0']").attr("selected",true);
+            $("#paperCode").val();
+            $("#glueList > [value='0']").attr("selected",true);
+            $("#purpose").val("");
+            $("#characteristic").val("");
+           // $("#paperSize").val("");
+            $("#price").val("");
+            $("#unit").val("");
+            $("#surfaceThick").val(0);
+            $("#soleThick").val(0);
+            $("#glueSoleThick").val(0);
+            $("#quantitative").val(0);
+            $("#note").val(" ");
+            $("#core").val("");
+           // $("#paperTypeCode").val("");
+       }
+       else{
+       var url = "/Paper/PaperDetail/" + id;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+            console.log(mess);
+            $('#ID').val(mess.resultObj.id);
+            //$('#selectTypeLoss option:' + mess.lossType).attr('selected', true);
+            //$("#selectTypeLoss > [value='" + mess.lossType + "']").attr("selected", "true");
+            //$('#status').prop('checked', mess.status);
+            //$('#glueName').val(mess.resultObj.glueName);
+            $('#paperTypeMainName').val(mess.resultObj.paperTypeMainName);
+            $('#paperTypeMainCode').val(mess.resultObj.paperTypeMainCode);
+
+            $("#paperTypeList > [value='" + mess.resultObj.paperTypeID + "']").attr("selected",true);
+            $("#supplier").val(mess.resultObj.supplier);
+            $("#bCode").val(mess.resultObj.bCode);
+            $("#paperTypeMainList > [value='" + mess.resultObj.paperTypeMainID + "']").attr("selected",true);
+            $("#soleList > [value='" + mess.resultObj.soleID + "']").attr("selected",true);
+            $("#paperCode").val(mess.resultObj.paperName);
+            $("#glueList > [value='" + mess.resultObj.glueID + "']").attr("selected",true);
+            $("#purpose").val(mess.resultObj.purpose);
+            $("#characteristic").val(mess.resultObj.characteristic);
+            //$("#paperSize").val(mess.resultObj.paperSize);
+            $("#price").val(mess.resultObj.price);
+            $("#unit").val(mess.resultObj.unit);
+            $("#surfaceThick").val(mess.resultObj.surfaceThick);
+            $("#soleThick").val(mess.resultObj.soleThick);
+            $("#glueSoleThick").val(mess.resultObj.soleBaseThick);
+            $("#totalThick").val(mess.resultObj.totalThick);
+            $("#quantitative").val(mess.resultObj.quantitativePaper);
+            $("#note").val(mess.resultObj.note);
+            $("#core").val(mess.resultObj.core);
+            //$("#paperTypeCode").val(mess.resultObj.paperTypeCode);
+           // $('#lossConst').val(mess.lossConst);
+        },
+        error: function (err) {
+            alert("Error: " + err.responseText);
+        } 
+
+    });
+    }
+    }
+</script>
+
+<script type="text/javascript">
+    function showPrice(id) {
+
+
+       var url = "/Paper/GetPaperPriceById/" + id;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+            console.log(mess);
+            $('#updateID').val(mess.resultObj.id);
+
+            $('#oldPrice').val(mess.resultObj.oldPrice);
+            $('#newPrice').val(mess.resultObj.newPrice);
+            $("#noteUpdate").val(mess.resultObj.note);
+
+           // $('#lossConst').val(mess.lossConst);
+        },
+        error: function (err) {
+            alert("Error: " + err.responseText);
+        }
+
+    });
+
+    }
+</script>
+
+@section CSS{
+<link href="~/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+@*<link href="~/css/viewTable.css" rel="stylesheet" />*@
+<style>
+    /*on top header */
+    .tableFixHead {
+        overflow: auto;
+        height: auto;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+    /* Just common table stuff. Really. */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px 16px;
+    }
+
+    th {
+        background: #eee;
+    }
+</style>
+}

@@ -1,0 +1,380 @@
+﻿@using ViewModels.Common
+@model ApiResult<IEnumerable<ViewModels.Catalog.STA0010_Material_Masters.STA0010_Material_MasterViewModel>>
+@section Scripts{
+   @* <script src="~/js/jsControllers/knifeController/Index.js"></script>*@
+}
+
+
+<div class="row">
+    <div class="col-8">
+        @* <h1>@ViewData["Title"]</h1>*@
+        <h1>Danh sách Mã code NVL</h1>
+    </div>
+    @* <div class="col-4 d-flex justify-content-center">
+        @if (TempData["ResultOk"] != null)
+        {
+        <h4 aria-hidden="true" id="alertMesss" class="alert-success">@TempData["ResultOk"]</h4>
+        }
+        else
+        {
+        <h4 type="button" class="close" data-dismiss="alert" aria-label="Close">
+        </h4>
+        }
+        </div>*@
+    <div class="container-fluid">
+        <div class="row">
+
+            <form method="get" enctype="multipart/form-data" class="mb-1 w-100">
+                <div class="row">
+                    @*<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Chất liệu</div>
+                        <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">
+                        <input type="text" class="form-control border-0 small" name="material" id="material" value="@ViewData["material"]" aria-describedby="basic-addon2" />
+                        </div>*@
+                        <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Loại NVL</div>
+                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-right">
+                             @Html.DropDownList("typeSearch", null, new { @class = "form-control d-sm-inline-block", @id = "matGroupSearch", @name = "matGroupSearch" })
+                       
+                        </div>
+
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 float-right">
+                        @* <button class="btn btn-primary" type="submit" id="btnSearch">
+                            Tìm kiếm
+                            </button>*@
+                        <a class="btn btn-success" onclick="show(0)" data-toggle="modal" data-target="#myModal">
+                            Thêm mới
+                        </a>
+
+
+                        @* @if (Model.Count() > 0)
+                            {
+                            <a class="btn btn-info ml-2" id="btnExport">
+                            Export Excel
+                            </a>
+                            }*@
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class=" table-responsive tableFixHead" style="max-height:750px; overflow-y:scroll;">
+        <table class="table table-bordered  table-hover" cellspacing="0" width="100%" style="overflow-x:scroll;  border-spacing: 0px;" id="table_id">
+            <thead>
+                <tr>
+                    <th scope="col"><b style="opacity:0%;">......</b>#<b style="opacity:0%;">......</b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>LoạiNVL<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>MãNVL<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Mãquảnlý<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Tênquảnlý<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Ghichú<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Đơnvị<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Sốlượng<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Giá<b style="opacity:0%;"></b></th>
+
+                </tr>
+            </thead>
+            <tbody style="font-size:12px;">
+
+                @*<tr class="@(item.IsDeleted == true?"text-danger":"")">*@
+                @if (Model.ResultObj.Count() > 0)
+                {
+                    @foreach (var item in Model.ResultObj)
+                    {
+                        <tr class="">
+                            <td class="p-0 text-center" style="font-size:10px; line-height:13px;">
+                                <a class="btn btn-sm btn-info" onclick="show(@item.Id)" data-toggle="modal" data-target="#myModal">Sửa</a>
+
+                            </td>
+                            <td class="p-0 text-center">
+                                @if (item.MATGROUPCD == "K")
+                                {
+                                    <b>Dao</b>
+                                }
+                                else if (item.MATGROUPCD == "P")
+                                {
+                                    <b>Giấy</b>
+                                }
+                                else
+                                {
+                                    <b>Khác</b>
+                                }
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.MATCD
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.MaterialCode
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.MaterialName
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Note
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Unit
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.UnitQty
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Price
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="4">Không có dữ liệu</td></tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl modal-lg model-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body container">
+                <h3 class="plan-title text-center">Thông tin Mã code NVL</h3>
+                <div class="row general">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-sm-12 mb-8">
+
+                        <div class="edit-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="ID" value="0" />
+                                </div>
+
+                                <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                                    <label class="control-label  label-text">Loại:</label>
+                                    @*@Html.DropDownList("codeLevel1", null, new { @class = "form-control d-sm-inline-block", @id = "codeLevel1", @name = "codeLevel1" })*@
+                                     @Html.DropDownList("type", null, new { @class = "form-control d-sm-inline-block", @id = "matGroup", @name = "matGroup" })
+                                    @*<input class="form-inline form-control  d-sm-inline-block" id="matGroup" maxlength="20"  />*@
+                                </div>
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label label-text">Mã NVL:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="matCD" maxlength="20"  />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label label-text">Mã quản lý:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="materialCode" maxlength="50"  />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Tên NVL:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="materialName" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Ghi chú:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="note" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Đơn vị:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="unit" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Số lượng:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="unitQuantity" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="price" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" id="action">
+                                <input type="button" value="Lưu" onclick="save();" class="btn btn-primary" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function show(id) {
+
+       if(id == 0){
+            $('#ID').val(0);
+            $("#matCD").prop("disabled", true).val("");
+            $("#matGroup > [value='0']").attr("selected",true);
+            $("#matGroup").prop("disabled", false);
+            $("#materialCode").prop("disabled", false).val("");
+            $("#materialName").val("");
+            $("#note").val("");
+            $("#unit").val("");
+            $("#unitQuantity").val(0);
+            $("#price").val(0);
+            //$("#codeLevel2 > [value='0']").attr("selected",true);
+       }
+       else{
+       var url = "/WareHouse/STA0010MaterialMasterDetail/" + id;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+            console.log(mess);
+            $('#ID').val(mess.resultObj.id);
+
+            $("#matCD").prop("disabled", true).val(mess.resultObj.matcd);
+            $("#matGroup > [value='"+ mess.resultObj.matgroupcd +"']").attr("selected",true);
+            $("#matGroup").prop("disabled", true);
+            $("#materialCode").prop("disabled", true).val(mess.resultObj.materialCode);
+            $("#materialName").val(mess.resultObj.materialName);
+            $("#note").val(mess.resultObj.note);
+            $("#unit").val(mess.resultObj.unit);
+            $("#unitQuantity").val(mess.resultObj.unitQty);
+            $("#price").val(mess.resultObj.price);
+            
+            //$("#codeLevel1 > [value='"+ mess.resultObj.idLevel1 +"']").attr("selected",true);
+        },
+        error: function (err) {
+            alert("Error: " + err.responseText);
+        }
+
+    });
+    }
+
+    }
+</script>
+
+<script type="text/javascript">
+
+        function save() {
+        if (confirm("Bạn có chắc chắn muốn lưu?") == true) {
+            var data = new FormData();
+            //var fileUpload = $("#attachment").get(0);
+            //var countFile = $("#attachment")[0].files.length;
+            //var files = fileUpload.files;
+             var id = $("#ID").val();
+             var url;
+             if(id <= 0)
+             {
+                  url = "/WareHouse/CreateSTA0010MaterialMaster";
+                  method ="POST";
+             }
+             else{
+                  url = "/WareHouse/UpdateSTA0010MaterialMaster/"+id;
+                   method ="POST";
+             }
+
+            var matCD = $("#matCD").val();
+            var matGroup = $("#matGroup option:selected").val();
+            var materialCode = $("#materialCode").val();
+            var materialName = $("#materialName").val();
+            var note = $("#note").val();
+            var unit = $("#unit").val();
+            var unitQuantity = $("#unitQuantity").val();
+            var price = $("#price").val();
+
+            var model;
+            if(id>0)
+            {
+                model = { ID: id, MaterialName:materialName, Note:note, Unit:unit, UnitQty:unitQuantity, Price:price};
+            }
+            else
+            {
+                model = { ID: id, MATGROUPCD:matGroup,MaterialCode:materialCode, MaterialName:materialName, Note:note, Unit:unit, UnitQty:unitQuantity, Price:price};
+            }
+
+
+            console.log(model);
+            $.ajax({
+                type: method,
+                url: url,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(model),
+                async: true,
+                success: function (mess) {
+                    if (mess.isSuccessResult == false) {
+                        $("#msg").removeClass("text-success");
+                        $("#msg").addClass("text-danger");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                    }
+                    else {
+                        $("#msg").removeClass("text-danger");
+                        $("#msg").addClass("text-success");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                        location.reload();
+                    }
+
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+
+                },
+                error: function (err) {
+
+                    $("#msg").removeClass("text-success");
+                    $("#msg").addClass("text-danger");
+                    $("#msg").html("Error: " + err);
+                    alert(err.responseText);
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+                }
+
+            });
+        }
+    }
+</script>
+
+
+@section CSS{
+<link href="~/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+@*<link href="~/css/viewTable.css" rel="stylesheet" />*@
+<style>
+    /*on top header */
+    .tableFixHead {
+        overflow: auto;
+        height: auto;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+    /* Just common table stuff. Really. */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px 16px;
+    }
+
+    th {
+        background: #eee;
+    }
+</style>
+}

@@ -1,0 +1,112 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = Quotation
+build_property.RootNamespace = Quotation
+build_property.ProjectDir = D:\Projects\Quotation\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
+build_property.MSBuildProjectDirectory = D:\Projects\Quotation
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/Projects/Quotation/Views/CodeManagement/CodeLevel1List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29kZU1hbmFnZW1lbnRcQ29kZUxldmVsMUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/CodeManagement/CodeLevel2List.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29kZU1hbmFnZW1lbnRcQ29kZUxldmVsMkxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Config/ConfigFeeList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uZmlnXENvbmZpZ0ZlZUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Config/MachineConfigList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uZmlnXE1hY2hpbmVDb25maWdMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Material/ManagerGroupMaterial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxcTWFuYWdlckdyb3VwTWF0ZXJpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Material/ManagerMaterial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWF0ZXJpYWxcTWFuYWdlck1hdGVyaWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Paper/CreateGlue.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFwZXJcQ3JlYXRlR2x1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Paper/CreatePaper.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFwZXJcQ3JlYXRlUGFwZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Paper/GlueList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFwZXJcR2x1ZUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Paper/PaperList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFwZXJcUGFwZXJMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Paper/PaperTypeList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFwZXJcUGFwZXJUeXBlTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Paper/PaperTypeMainList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFwZXJcUGFwZXJUeXBlTWFpbkxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Paper/SoleList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFwZXJcU29sZUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Quotation/ApproveQuotation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVvdGF0aW9uXEFwcHJvdmVRdW90YXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Quotation/CreateUnitPrice.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVvdGF0aW9uXENyZWF0ZVVuaXRQcmljZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Quotation/QuotationList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVvdGF0aW9uXFF1b3RhdGlvbkxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/Quotation/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-u31ooeou3m

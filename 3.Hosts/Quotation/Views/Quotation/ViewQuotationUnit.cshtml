@@ -1,0 +1,1063 @@
+﻿@using ViewModels.Common
+@model ViewModels.Catalog.UnitPrices.UnitPriceExecutingRequest
+
+@section CSS{
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/amsify.select.css" rel="stylesheet" />
+}
+
+<div class="container-fluid shadow p-5">
+    <form style="max-height:770px; overflow-x:scroll;" method="post">
+
+        <div class="row pb-2">
+            <h2 class="col-md-8">Tạo đơn giá</h2>
+            <div class="col-md-4">
+                <button class="btn btn-lg btn-primary p-2 float-right" id="btnSave" type="submit"><i class="bi bi-file-plus-fill"></i>Lưu</button>&nbsp;
+                <a asp-controller="Quotation" asp-action="Index" class="btn btn-lg btn-warning p-2  float-right">Trở lại</a>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 ">
+                <label asp-for="Width"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Width" asp-for="Width">
+                @*  @Html.DropDownList("orderType", (IEnumerable<SelectListItem>)ViewBag.orderType, new { @class = "form-control", @id = "orderType", @name = "orderType" })
+                    @Html.DropDownList("orderTypeCode", null, new { @class = "form-control d-none", @id = "orderTypeCode", @name = "orderTypeCode" })*@
+                <span asp-validation-for="Width" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1">
+                <label asp-for="Height"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Height" asp-for="Height" id="Height">
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="NumberStampHorizontal"></label>
+                <input type="text" class="form-control mb-3 d-inline-block" value="@Model.NumberStampHorizontal" asp-for="NumberStampHorizontal">
+                <span asp-validation-for="NumberStampHorizontal" class=" alert-danger"></span>
+            </div>
+
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="NumberRowStamp"></label>
+                <input type="text" class="form-control mb-3" value="@Model.NumberRowStamp" asp-for="NumberRowStamp" id="NumberRowStamp">
+                @*    @Html.DropDownListFor(model=>model.KnifeCode, (IEnumerable<SelectListItem>)ViewBag.cusList, new { @class = "form-control ", @id = "cusList", @name = "cusList" })*@
+                <span asp-validation-for="NumberRowStamp" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Border"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Border" asp-for="Border">
+                <span asp-validation-for="Border" class=" alert-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1">
+                <label asp-for="Midle"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Midle" asp-for="Midle">
+                <span asp-validation-for="Midle" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="Gap"></label>
+                <input type="text" class="form-control" value="@Model.Gap" asp-for="Gap">
+                <span asp-validation-for="Gap" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="RowStampHaveGap"></label>
+                <input type="text" class="form-control" value="@Model.RowStampHaveGap" asp-for="RowStampHaveGap">
+                <span asp-validation-for="RowStampHaveGap" class=" alert-danger"></span>
+            </div>
+
+            @*<div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label>Danh sách mã hàng</label>
+                <select class="form-control mb-3" id="productList">
+                <option value="0">Chọn mã hàng</option>
+                </select>
+                </div>*@
+
+            @* <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 ">
+                <label class="d-block opacity-25">aaa</label>
+                <a class="btn btn-success p-2  float-right" id="btnChooseProduct">Chọn</a>
+                <a class="btn btn-info p-2  float-right d-none" id="btnAddProduct">Thêm</a>
+                </div>*@
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="Characteristic"></label>
+                <input class="form-control" value="@Model.Characteristic" asp-for="Characteristic">
+                <span asp-validation-for="Characteristic" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="Point"></label>
+                <input type="text" class="form-control" value="@Model.Point" asp-for="Point">
+                <span asp-validation-for="Point" class=" alert-danger"></span>
+            </div>
+
+            @* <div class="form-group col-md-2">
+                <label asp-for="CreatDate"></label>
+                <input type="date" class="form-control mb-3" value="@* DateTime.Now.ToString("yyyy-MM-dd")" asp-for="OrderDate">
+                <span asp-validation-for="OrderDate" class=" alert-danger"></span>
+                </div>
+                <div class="form-group col-md-2 mb-3">
+                <label asp-for="DeliveryDate"></label>
+                <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" asp-for="DeliveryDate">
+                <span asp-validation-for="DeliveryDate" class=" alert-danger"></span>
+                </div>*@
+
+            @*  <div class="form-group col-md-2 mb-3">
+                <label>Sử dụng dao có sãn?</label>
+
+                <label class="switch d-block">
+                <input type="checkbox" checked="checked" id="usingKnifeValue">
+                <span class="slider round" id="usingKnife"></span>
+                </label>
+                <span class=" alert-danger"></span>
+                </div>*@
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="SplitLine"></label>
+                @*   @Html.DropDownListFor(model=>model.KnifeCode, (IEnumerable<SelectListItem>)ViewBag.knifeList, new { @class = "form-control js-searchBox    ", @id = "knifeList", @name = "knifeList" })*@
+                <input type="text" class="form-control" value="@Model.SplitLine" asp-for="SplitLine">
+                <span asp-validation-for="SplitLine" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="PaperSize"></label>
+                @*   @Html.DropDownListFor(model=>model.KnifeCode, (IEnumerable<SelectListItem>)ViewBag.knifeList, new { @class = "form-control js-searchBox    ", @id = "knifeList", @name = "knifeList" })*@
+                <input type="text" class="form-control" value="@Model.PaperSize" asp-for="PaperSize">
+                <span asp-validation-for="PaperSize" class=" alert-danger"></span>
+            </div>
+
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="MetterPerRoll"></label>
+                <input type="text" class="form-control mb-3" value="@Model.MetterPerRoll" asp-for="MetterPerRoll">
+                <span asp-validation-for="MetterPerRoll" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="StampPerRoll"></label>
+                <input type="text" class="form-control" value="@Model.StampPerRoll" asp-for="StampPerRoll">
+                <span asp-validation-for="StampPerRoll" class=" alert-danger"></span>
+            </div>
+
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1">
+                <label asp-for="Quantity"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Quantity" asp-for="Quantity">
+                <span asp-validation-for="Quantity" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 mb-3">
+                <label asp-for="Unit"></label>
+                <input class="form-control" value="@Model.Unit" asp-for="Unit">
+                <span asp-validation-for="Unit" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="PaperCode"></label>
+                <input type="text" class="form-control" value="@Model.PaperCode" asp-for="PaperCode">
+                @*@Html.DropDownListFor(model=>model.PaperCode, (IEnumerable<SelectListItem>)ViewBag.paperList, new { @class = "form-control ", @id = "paperList", @name = "paperList" })*@
+                <span asp-validation-for="PaperCode" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="TypeCopy"></label>
+                <input type="text" class="form-control" value="@Model.TypeCopy" asp-for="TypeCopy">
+                <span asp-validation-for="TypeCopy" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 ">
+                <label asp-for="ColorType"></label>
+                <input type="text" class="form-control mb-3" value="@Model.ColorType" asp-for="ColorType">
+                <span asp-validation-for="ColorType" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 mb-3">
+                <label asp-for="NumberOfColor"></label>
+                <input type="text" class="form-control" value="@Model.NumberOfColor" asp-for="NumberOfColor">
+                <span asp-validation-for="NumberOfColor" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 mb-3">
+                <label asp-for="NumberOfCode"></label>
+                <input type="text" class="form-control" value="@Model.NumberOfCode" asp-for="NumberOfCode">
+                <span asp-validation-for="NumberOfCode" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 ">
+                <label asp-for="AreaPrint"></label>
+                <input type="text" class="form-control mb-3" asp-for="AreaPrint" value="@Model.AreaPrint">
+                <span class=" alert-danger"></span>
+            </div>
+
+            @* <div class="form-group col-md-1 mb-3">
+                <label asp-for="Unit"></label>
+                @Html.DropDownListFor(model=>model.Unit, (IEnumerable<SelectListItem>)ViewBag.unit, new { @class = "form-control", @id = "unit", @name = "unit" })
+                <span asp-validation-for="Unit" class=" alert-danger"></span>
+                </div>*@
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 ">
+                <label asp-for="Lamination"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Lamination" asp-for="Lamination">
+                <span asp-validation-for="Lamination" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 mb-3">
+                <label asp-for="Core"></label>
+                <input type="text" class="form-control" value="@Model.Core" asp-for="Core">
+                <span asp-validation-for="Core" class=" alert-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="form-row" id="productListSelected">
+            <div class="h5 col-12" id="">Danh sách mã hàng</div>
+
+            @* <div class="col-xl-3 col-md-6 mb-4" id="">
+                <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                <div class="text-md-start font-weight-bold text-primary text-uppercase mb-1">
+                Mã hàng  <span class="h5 text-xl text-info">5C1.......-001</span>
+                </div>
+                <div class=" row h6 mb-0 font-weight-bold text-gray-500"><div class="col-md-6">Số lượng</div><div class="col-md-6"> <input type="text" class="form-control form-inline" value="0"></div></div>
+                <div class=" row h6 mb-0 font-weight-bold text-gray-500"><div class="col-md-6">M/ Đơn</div><div class="col-md-6"> <input type="text" class="form-control form-inline" value="0"></div></div>
+                </div>
+                <div class="col-auto">
+                <i class="fas fa-product fa-2x text-gray-300"></i>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>*@
+
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="MachinePrint"></label>
+                <input type="text" class="form-control" value="@Model.MachinePrint" asp-for="MachinePrint">
+                @* @Html.DropDownListFor(model=>model.MachinePrint, (IEnumerable<SelectListItem>)ViewBag.printMachine, new { @class = "form-control ", @id = "printMachine", @name = "printMachine" })*@
+                <span asp-validation-for="MachinePrint" class=" alert-danger"></span>
+            </div>
+
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="MachinePressedPowder"></label>
+                <input type="text" class="form-control" value="@Model.MachinePressedPowder" asp-for="MachinePressedPowder">
+                @*@Html.DropDownListFor(model=>model.MachinePressedPowder, (IEnumerable<SelectListItem>)ViewBag.compressMachine, new { @class = "form-control ", @id = "compressMachine", @name = "compressMachine" })*@
+                <span asp-validation-for="MachinePressedPowder" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="MachineDieCutting"></label>
+                <input type="text" class="form-control" value="@Model.MachineDieCutting" asp-for="MachineDieCutting">
+                @*@Html.DropDownListFor(model=>model.MachineDieCutting, (IEnumerable<SelectListItem>)ViewBag.dieCuttingMachine, new { @class = "form-control ", @id = "dieCuttingMachine", @name = "dieCuttingMachine" })*@
+                <span asp-validation-for="MachineDieCutting" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="MachineDivide"></label>
+                <input type="text" class="form-control" value="@Model.MachineDivide" asp-for="MachineDivide">
+                @*@Html.DropDownListFor(model=>model.MachineDivide, (IEnumerable<SelectListItem>)ViewBag.divideMachine, new { @class = "form-control ", @id = "divideMachine", @name = "divideMachine" })*@
+                <span asp-validation-for="MachineDivide" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="MachinePacking"></label>
+                <input type="text" class="form-control mb-3" value="@Model.MachinePacking" asp-for="MachinePacking">
+                @*@Html.DropDownListFor(model=>model.MachinePacking, (IEnumerable<SelectListItem>)ViewBag.packingMachine, new { @class = "form-control ", @id = "packingMachine", @name = "packingMachine" })*@
+                <span asp-validation-for="MachinePacking" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CartonPerOrder">Số thùng</label>
+                <input type="text" class="form-control mb-3" value="@Model.CartonPerOrder" asp-for="CartonPerOrder">
+                @*@Html.DropDownListFor(model=>model.MachinePacking, (IEnumerable<SelectListItem>)ViewBag.packingMachine, new { @class = "form-control ", @id = "packingMachine", @name = "packingMachine" })*@
+                <span asp-validation-for="CartonPerOrder" class=" alert-danger"></span>
+            </div>
+
+             <div class="h5 col-12" id="">Tổng quan năng lực và vật tư</div>
+            <div class="form-group col-md-1">
+                <label asp-for="TotalMetter"></label>
+                <input type="text" class="form-control mb-3" value="@Model.TotalMetter.ToString("#,###.##")" asp-for="TotalMetter">
+                <span asp-validation-for="TotalMetter" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="TotalSquareMetter"></label>
+                <input type="text" class="form-control" value="@Model.TotalSquareMetter.ToString("#,###.##")" asp-for="TotalSquareMetter">
+                <span asp-validation-for="TotalSquareMetter" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="StampStep"></label>
+                <input type="text" class="form-control" value="@Model.StampStep" asp-for="StampStep">
+                <span asp-validation-for="StampStep" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="StampPerStep"></label>
+                <input type="text" class="form-control" value="@Model.StampPerStep" asp-for="StampPerStep">
+                <span asp-validation-for="StampPerStep" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="MetterPerOrder"></label>
+                <input type="text" class="form-control" value="@Model.MetterPerOrder.ToString("#,###.##")" asp-for="MetterPerOrder">
+                <span asp-validation-for="MetterPerOrder" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="MetterSquarePerOrder"></label>
+                <input type="text" class="form-control" value="@Model.MetterSquarePerOrder.ToString("#,###.##")" asp-for="MetterSquarePerOrder">
+                <span asp-validation-for="MetterSquarePerOrder" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="Core_"></label>
+                <input type="text" class="form-control" value="@Model.Core_.ToString("#,###.##")" asp-for="Core_">
+                <span asp-validation-for="Core_" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="Loss"></label>
+                <input type="text" class="form-control" value="@Model.Loss.ToString("#,###.##")" asp-for="Loss">
+                <span asp-validation-for="Loss" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintSquareMetter"></label>
+                <input type="text" class="form-control" value="@Model.PrintSquareMetter.ToString("#,###.##")" asp-for="PrintSquareMetter">
+                <span asp-validation-for="PrintSquareMetter" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="SFilm"></label>
+                <input type="text" class="form-control" value="@Model.SFilm.ToString("#,###.##")" asp-for="SFilm">
+                <span asp-validation-for="SFilm" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintHours"></label>
+                <input type="text" class="form-control" value="@Model.PrintHours.ToString("#,###.##")" asp-for="PrintHours">
+                <span asp-validation-for="PrintHours" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderHours"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderHours.ToString("#,###.##")" asp-for="PressedPowderHours">
+                <span asp-validation-for="PressedPowderHours" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DieCuttingHours"></label>
+                <input type="text" class="form-control" value="@Model.DieCuttingHours.ToString("#,###.##")" asp-for="DieCuttingHours">
+                <span asp-validation-for="DieCuttingHours" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideHours"></label>
+                <input type="text" class="form-control" value="@Model.DivideHours.ToString("#,###.##")" asp-for="DivideHours">
+                <span asp-validation-for="DivideHours" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="NumberRoll"></label>
+                <input type="text" class="form-control" value="@Model.NumberRoll.ToString("#,###.##")" asp-for="NumberRoll">
+                <span asp-validation-for="NumberRoll" class=" alert-danger"></span>
+            </div>
+
+            <div class="h5 col-12" id="">IN</div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintChangeRoll"></label>
+                <input type="text" class="form-control" value="@Model.PrintChangeRoll.ToString("#,###.##")" asp-for="PrintChangeRoll">
+                <span asp-validation-for="PrintChangeRoll" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintColor"></label>
+                <input type="text" class="form-control" value="@Model.PrintColor" asp-for="PrintColor">
+                <span asp-validation-for="PrintColor" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintCarryCompensation"></label>
+                <input type="text" class="form-control" value="@Model.PrintCarryCompensation.ToString("#,###.##")" asp-for="PrintCarryCompensation">
+                <span asp-validation-for="PrintCarryCompensation" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintChangeCode"></label>
+                <input type="text" class="form-control" value="@Model.PrintChangeCode.ToString("#,###.##")" asp-for="PrintChangeCode">
+                <span asp-validation-for="PrintChangeCode" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintRisk"></label>
+                <input type="text" class="form-control" value="@Model.PrintRisk.ToString("#,###.##")" asp-for="PrintRisk">
+                <span asp-validation-for="PrintRisk" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintWhiteCarry"></label>
+                <input type="text" class="form-control" value="@Model.PrintWhiteCarry.ToString("#,###.##")" asp-for="PrintWhiteCarry">
+                <span asp-validation-for="PrintWhiteCarry" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintTarget"></label>
+                <input type="text" class="form-control" value="@Model.PrintTarget.ToString("#,###.##")" asp-for="PrintTarget">
+                <span asp-validation-for="PrintTarget" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintHourSalary"></label>
+                <input type="text" class="form-control" value="@Model.PrintHourSalary.ToString("#,###.##")" asp-for="PrintHourSalary">
+                <span asp-validation-for="PrintHourSalary" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintChange"></label>
+                <input type="text" class="form-control" value="@Model.PrintChange.ToString("#,###.##")" asp-for="PrintChange">
+                <span asp-validation-for="PrintChange" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PrintElectric"></label>
+                <input type="text" class="form-control" value="@Model.PrintElectric.ToString("#,###.##")" asp-for="PrintElectric">
+                <span asp-validation-for="PrintElectric" class=" alert-danger"></span>
+            </div>
+            
+            <div class="h5 col-12" id="">Ép nhũ</div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderChangeRoll"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderChangeRoll.ToString("#,###.##")" asp-for="PressedPowderChangeRoll">
+                <span asp-validation-for="PressedPowderChangeRoll" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderColor"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderColor.ToString("#,###.##")" asp-for="PressedPowderColor">
+                <span asp-validation-for="PressedPowderColor" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderCarryCompensation"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderCarryCompensation.ToString("#,###.##")" asp-for="PressedPowderCarryCompensation">
+                <span asp-validation-for="PressedPowderCarryCompensation" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderRisk"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderRisk.ToString("#,###.##")" asp-for="PressedPowderRisk">
+                <span asp-validation-for="PressedPowderRisk" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderTarget"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderTarget.ToString("#,###.##")" asp-for="PressedPowderTarget">
+                <span asp-validation-for="PressedPowderTarget" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderHourSalary"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderHourSalary.ToString("#,###.##")" asp-for="PressedPowderHourSalary">
+                <span asp-validation-for="PressedPowderHourSalary" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderChange"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderChange.ToString("#,###.##")" asp-for="PressedPowderChange">
+                <span asp-validation-for="PressedPowderChange" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="PressedPowderElectric"></label>
+                <input type="text" class="form-control" value="@Model.PressedPowderElectric.ToString("#,###.##")" asp-for="PressedPowderElectric">
+                <span asp-validation-for="PressedPowderElectric" class=" alert-danger"></span>
+            </div>
+
+            <div class="h5 col-12" id="">Bế</div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryChangeRoll"></label>
+                <input type="text" class="form-control" value="@Model.CarryChangeRoll.ToString("#,###.##")" asp-for="CarryChangeRoll">
+                <span asp-validation-for="CarryChangeRoll" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryColor"></label>
+                <input type="text" class="form-control" value="@Model.CarryColor.ToString("#,###.##")" asp-for="CarryColor">
+                <span asp-validation-for="CarryColor" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryCompensation"></label>
+                <input type="text" class="form-control" value="@Model.CarryCompensation.ToString("#,###.##")" asp-for="CarryCompensation">
+                <span asp-validation-for="CarryCompensation" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryRisk"></label>
+                <input type="text" class="form-control" value="@Model.CarryRisk.ToString("#,###.##")" asp-for="CarryRisk">
+                <span asp-validation-for="CarryRisk" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryWhiteCarry"></label>
+                <input type="text" class="form-control" value="@Model.CarryWhiteCarry.ToString("#,###.##")" asp-for="CarryWhiteCarry">
+                <span asp-validation-for="CarryWhiteCarry" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryTarget"></label>
+                <input type="text" class="form-control" value="@Model.CarryTarget.ToString("#,###.##")" asp-for="CarryTarget">
+                <span asp-validation-for="CarryTarget" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryHourSalary"></label>
+                <input type="text" class="form-control" value="@Model.CarryHourSalary.ToString("#,###.##")" asp-for="CarryHourSalary">
+                <span asp-validation-for="CarryHourSalary" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryChange"></label>
+                <input type="text" class="form-control" value="@Model.CarryChange.ToString("#,###.##")" asp-for="CarryChange">
+                <span asp-validation-for="CarryChange" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CarryElectric"></label>
+                <input type="text" class="form-control" value="@Model.CarryElectric.ToString("#,###.##")" asp-for="CarryElectric">
+                <span asp-validation-for="CarryElectric" class=" alert-danger"></span>
+            </div>
+
+             <div class="h5 col-12" id="">Chia</div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideChangeRoll"></label>
+                <input type="text" class="form-control" value="@Model.DivideChangeRoll.ToString("#,###.##")" asp-for="DivideChangeRoll">
+                <span asp-validation-for="DivideChangeRoll" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideColor"></label>
+                <input type="text" class="form-control" value="@Model.DivideColor.ToString("#,###.##")" asp-for="DivideColor">
+                <span asp-validation-for="DivideColor" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideCarryCompensation"></label>
+                <input type="text" class="form-control" value="@Model.DivideCarryCompensation.ToString("#,###.##")" asp-for="DivideCarryCompensation">
+                <span asp-validation-for="DivideCarryCompensation" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideRisk"></label>
+                <input type="text" class="form-control" value="@Model.DivideRisk.ToString("#,###.##")" asp-for="DivideRisk">
+                <span asp-validation-for="DivideRisk" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideWhiteCarry"></label>
+                <input type="text" class="form-control" value="@Model.DivideWhiteCarry.ToString("#,###.##")" asp-for="DivideWhiteCarry">
+                <span asp-validation-for="DivideWhiteCarry" class=" alert-danger"></span>
+            </div>
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideTarget"></label>
+                <input type="text" class="form-control" value="@Model.DivideTarget.ToString("#,###.##")" asp-for="DivideTarget">
+                <span asp-validation-for="DivideTarget" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideHourSalary"></label>
+                <input type="text" class="form-control" value="@Model.DivideHourSalary.ToString("#,###.##")" asp-for="DivideHourSalary">
+                <span asp-validation-for="DivideHourSalary" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideChange"></label>
+                <input type="text" class="form-control" value="@Model.DivideChange.ToString("#,###.##")" asp-for="DivideChange">
+                <span asp-validation-for="DivideChange" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DivideElectric"></label>
+                <input type="text" class="form-control" value="@Model.DivideElectric.ToString("#,###.##")" asp-for="DivideElectric">
+                <span asp-validation-for="DivideElectric" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="h5 col-12" id="">Màng</div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="SLamination"></label>
+                <input type="text" class="form-control" value="@Model.SLamination.ToString("#,###.##")" asp-for="SLamination">
+                <span asp-validation-for="SLamination" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="SrinkFilm"></label>
+                <input type="text" class="form-control" value="@Model.SrinkFilm.ToString("#,###.##")" asp-for="SrinkFilm">
+                <span asp-validation-for="SrinkFilm" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="h5 col-12" id="">Quản lý đơn hàng</div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="ManagermentFeePrint"></label>
+                <input type="text" class="form-control" value="@Model.ManagermentFeePrint.ToString("#,###.##")" asp-for="ManagermentFeePrint">
+                <span asp-validation-for="ManagermentFeePrint" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="ManagermentFeeCarry"></label>
+                <input type="text" class="form-control" value="@Model.ManagermentFeeCarry.ToString("#,###.##")" asp-for="ManagermentFeeCarry">
+                <span asp-validation-for="ManagermentFeeCarry" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="MachineDivide"></label>
+                <input type="text" class="form-control" value="@Model.MachineDivide.ToString("#,###.##")" asp-for="MachineDivide">
+                <span asp-validation-for="MachineDivide" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="ManagermentFeeTotal"></label>
+                <input type="text" class="form-control text-info" value="@Model.ManagermentFeeTotal.ToString("#,###.##")" asp-for="ManagermentFeeTotal">
+                <span asp-validation-for="ManagermentFeeTotal" class=" alert-danger"></span>
+            </div>
+
+            <div class="h5 col-12" id="">Chi phí mặt bằng</div>
+             <div class="form-group col-md-1 mb-3">
+                <label asp-for="WorkshopRentalFee"></label>
+                <input type="text" class="form-control text-info" value="@Model.WorkshopRentalFee.ToString("#,###.##")" asp-for="WorkshopRentalFee">
+                <span asp-validation-for="WorkshopRentalFee" class=" alert-danger"></span>
+            </div>
+
+            <div class="h5 col-12" id="">Khấu hao + Phí hao mòn</div>
+             <div class="form-group col-md-1 mb-3">
+                <label asp-for="DepriciationPrintFee"></label>
+                <input type="text" class="form-control" value="@Model.DepriciationPrintFee.ToString("#,###.##")" asp-for="DepriciationPrintFee">
+                <span asp-validation-for="DepriciationPrintFee" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DepriciationCarryFee"></label>
+                <input type="text" class="form-control" value="@Model.DepriciationCarryFee.ToString("#,###.##")" asp-for="DepriciationCarryFee">
+                <span asp-validation-for="DepriciationCarryFee" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DepriciationDivideFee"></label>
+                <input type="text" class="form-control" value="@Model.DepriciationDivideFee.ToString("#,###.##")" asp-for="DepriciationDivideFee">
+                <span asp-validation-for="DepriciationDivideFee" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DepriciationTotalFee"></label>
+                <input type="text" class="form-control text-info" value="@Model.DepriciationTotalFee.ToString("#,###.##")" asp-for="DepriciationTotalFee">
+                <span asp-validation-for="DepriciationTotalFee" class=" alert-danger"></span>
+            </div>
+
+            <div class="h5 col-12" id="">Điện chung</div>
+             <div class="form-group col-md-1 mb-3">
+                <label asp-for="ElectricFee"></label>
+                <input type="text" class="form-control text-info" value="@Model.ElectricFee.ToString("#,###.##")" asp-for="ElectricFee">
+                <span asp-validation-for="ElectricFee" class=" alert-danger"></span>
+            </div>
+
+            <div class="h5 col-12" id="">Dao bế</div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="KnifeNumber"></label>
+                <input type="text" class="form-control mb-3" value="@Model.KnifeNumber.ToString("#,###.##")" asp-for="KnifeNumber">
+                <span asp-validation-for="KnifeNumber" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="KnifeUnitFee"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.KnifeUnitFee.ToString("#,###.##")" asp-for="KnifeUnitFee">
+                <span asp-validation-for="KnifeUnitFee" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="KnifeOtherFee"></label>
+                <input type="text" class="form-control mb-3" value="@Model.KnifeOtherFee.ToString("#,###.##")" asp-for="KnifeOtherFee">
+                <span asp-validation-for="KnifeOtherFee" class=" alert-danger"></span>
+            </div>
+
+             <div class="h5 col-12" id="">Tính m >> D</div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_D"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Box_D.ToString("#,###.##")" asp-for="Box_D">
+                <span asp-validation-for="Box_D" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_DD"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.Box_DD.ToString("#,###.##")" asp-for="Box_DD">
+                <span asp-validation-for="Box_DD" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_d"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Box_d.ToString("#,###.##")" asp-for="Box_d">
+                <span asp-validation-for="Box_d" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="Box_t"></label>
+                <input type="text" class="form-control" value="@Model.Box_t.ToString("#,###.##")" asp-for="Box_t">
+                <span asp-validation-for="Box_t" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_L"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Box_L" asp-for="Box_L">
+                <span asp-validation-for="Box_L" class=" alert-danger"></span>
+            </div> 
+
+            <div class="h5 col-12" id="">KT cuộn tem</div>
+             <div class="form-group col-md-1 mb-3">
+                <label asp-for="Roll_width"></label>
+                <input type="text" class="form-control" value="@Model.Roll_width.ToString("#,###.##")" asp-for="Roll_width">
+                <span asp-validation-for="Roll_width" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Roll_height"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Roll_height.ToString("#,###.##")" asp-for="Roll_height">
+                <span asp-validation-for="Roll_height" class=" alert-danger"></span>
+            </div> 
+
+            <div class="h5 col-12" id="">KT Thùng</div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_long"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Box_long.ToString("#,###.##")" asp-for="Box_long">
+                <span asp-validation-for="Box_long" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_width"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.Box_width.ToString("#,###.##")" asp-for="Box_width">
+                <span asp-validation-for="Box_width" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_height"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Box_height.ToString("#,###.##")" asp-for="Box_height">
+                <span asp-validation-for="Box_height" class=" alert-danger"></span>
+            </div>
+
+            <div class="h5 col-12" id="">Số lượng 1</div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Long_1"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Long_1.ToString("#,###.##")" asp-for="Long_1">
+                <span asp-validation-for="Long_1" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Width_1"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.Width_1.ToString("#,###.##")" asp-for="Width_1">
+                <span asp-validation-for="Width_1" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Height_1"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Height_1.ToString("#,###.##")" asp-for="Height_1">
+                <span asp-validation-for="Height_1" class=" alert-danger"></span>
+            </div>
+             <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="RollPerBox"></label>
+                <input type="text" class="form-control mb-3" value="@Model.RollPerBox.ToString("#,###.##")" asp-for="RollPerBox">
+                <span asp-validation-for="RollPerBox" class=" alert-danger"></span>
+            </div>
+
+            <div class="h5 col-12" id="">Công điện</div>
+             <div class="form-group col-md-1 mb-3">
+                <label asp-for="Box_t"></label>
+                <input type="text" class="form-control" value="@Model.Box_t.ToString("#,###.##")" asp-for="Box_t">
+                <span asp-validation-for="Box_t" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_L"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Box_L.ToString("#,###.##")" asp-for="Box_L">
+                <span asp-validation-for="Box_L" class=" alert-danger"></span>
+            </div> 
+
+            <div class="h5 col-12" id="">Công điện</div>
+             <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_PrintHour"></label>
+                <input class="form-control" value="@Model.CD_PrintHour.ToString("#,###.##")" asp-for="CD_PrintHour">
+                <span asp-validation-for="CD_PrintHour" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CD_PrintSalary"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CD_PrintSalary.ToString("#,###.##")" asp-for="CD_PrintSalary">
+                <span asp-validation-for="CD_PrintSalary" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_PrintElectric"></label>
+                <input type="text" class="form-control" value="@Model.CD_PrintElectric.ToString("#,###.##")" asp-for="CD_PrintElectric">
+                <span asp-validation-for="CD_PrintElectric" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CD_PressedPowderHour"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CD_PressedPowderHour.ToString("#,###.##")" asp-for="CD_PressedPowderHour">
+                <span asp-validation-for="CD_PressedPowderHour" class=" alert-danger"></span>
+            </div>  
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_PressedPowderSalary"></label>
+                <input type="text" class="form-control" value="@Model.CD_PressedPowderSalary.ToString("#,###.##")" asp-for="CD_PressedPowderSalary">
+                <span asp-validation-for="CD_PressedPowderSalary" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CD_PressedPowderElectric"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CD_PressedPowderElectric.ToString("#,###.##")" asp-for="CD_PressedPowderElectric">
+                <span asp-validation-for="CD_PressedPowderElectric" class=" alert-danger"></span>
+            </div>  
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_CarryHour"></label>
+                <input type="text" class="form-control" value="@Model.CD_CarryHour.ToString("#,###.##")" asp-for="CD_CarryHour">
+                <span asp-validation-for="CD_CarryHour" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CD_CarrySalary"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CD_CarrySalary.ToString("#,###.##")" asp-for="CD_CarrySalary">
+                <span asp-validation-for="CD_CarrySalary" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_PrintHour"></label>
+                <input type="text" class="form-control" value="@Model.CD_PrintHour.ToString("#,###.##")" asp-for="CD_PrintHour">
+                <span asp-validation-for="CD_PrintHour" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CD_CarryElectric"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CD_CarryElectric.ToString("#,###.##")" asp-for="CD_CarryElectric">
+                <span asp-validation-for="CD_CarryElectric" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_DivideHour"></label>
+                <input type="text" class="form-control" value="@Model.CD_DivideHour.ToString("#,###.##")" asp-for="CD_DivideHour">
+                <span asp-validation-for="CD_DivideHour" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CD_DivideSalary"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CD_DivideSalary.ToString("#,###.##")" asp-for="CD_DivideSalary">
+                <span asp-validation-for="CD_DivideSalary" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_DivideElectric"></label>
+                <input type="text" class="form-control" value="@Model.CD_DivideElectric.ToString("#,###.##")" asp-for="CD_DivideElectric">
+                <span asp-validation-for="CD_DivideElectric" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CD_TotalHour"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CD_TotalHour.ToString("#,###.##")" asp-for="CD_TotalHour">
+                <span asp-validation-for="CD_TotalHour" class=" alert-danger"></span>
+            </div>  
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_TotalSalary"></label>
+                <input type="text" class="form-control text-info" value="@Model.CD_TotalSalary.ToString("#,###.##")" asp-for="CD_TotalSalary">
+                <span asp-validation-for="CD_TotalSalary" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CD_TotalElectric"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CD_TotalElectric.ToString("#,###.##")" asp-for="CD_TotalElectric">
+                <span asp-validation-for="CD_TotalElectric" class=" alert-danger"></span>
+            </div>
+            
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="DecalPrice"></label>
+                <input type="text" class="form-control" value="@Model.DecalPrice.ToString("#,###.##")" asp-for="DecalPrice">
+                <span asp-validation-for="DecalPrice" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="DecalTotalPrice"></label>
+                <input type="text" class="form-control mb-3 text-info" value="@Model.DecalTotalPrice.ToString("#,###.##")" asp-for="DecalTotalPrice">
+                <span asp-validation-for="DecalTotalPrice" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_PrintHour"></label>
+                <input type="text" class="form-control" value="@Model.CD_PrintHour.ToString("#,###.##")" asp-for="CD_PrintHour">
+                <span asp-validation-for="CD_PrintHour" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="MetterSquareLamination"></label>
+                <input type="text" class="form-control mb-3" value="@Model.MetterSquareLamination.ToString("#,###.##")" asp-for="MetterSquareLamination">
+                <span asp-validation-for="MetterSquareLamination" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="LaminationUnitPrice"></label>
+                <input type="text" class="form-control" value="@Model.LaminationUnitPrice.ToString("#,###.##")" asp-for="LaminationUnitPrice">
+                <span asp-validation-for="LaminationUnitPrice" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="LaminationTotalPrice"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.LaminationTotalPrice.ToString("#,###.##")" asp-for="LaminationTotalPrice">
+                <span asp-validation-for="LaminationTotalPrice" class=" alert-danger"></span>
+            </div>  
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CD_PrintHour"></label>
+                <input type="text" class="form-control" value="@Model.CD_PrintHour.ToString("#,###.##")" asp-for="CD_PrintHour">
+                <span asp-validation-for="CD_PrintHour" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CoreUnitPrice"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CoreUnitPrice.ToString("#,###.##")" asp-for="CoreUnitPrice">
+                <span asp-validation-for="CoreUnitPrice" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="CorePrice"></label>
+                <input type="text" class="form-control text-info" value="@Model.CorePrice.ToString("#,###.##")" asp-for="CorePrice">
+                <span asp-validation-for="CorePrice" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="ColorPrintKG"></label>
+                <input type="text" class="form-control mb-3" value="@Model.ColorPrintKG.ToString("#,###.##")" asp-for="ColorPrintKG">
+                <span asp-validation-for="ColorPrintKG" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="ColorUnitPrice"></label>
+                <input type="text" class="form-control" value="@Model.ColorUnitPrice.ToString("#,###.##")" asp-for="ColorUnitPrice">
+                <span asp-validation-for="ColorUnitPrice" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="ColorPrice"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.ColorPrice.ToString("#,###.##")" asp-for="ColorPrice">
+                <span asp-validation-for="ColorPrice" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="FilmUnitPrice"></label>
+                <input type="text" class="form-control" value="@Model.FilmUnitPrice.ToString("#,###.##")" asp-for="FilmUnitPrice">
+                <span asp-validation-for="FilmUnitPrice" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="FilmPrice"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.FilmPrice.ToString("#,###.##")" asp-for="FilmPrice">
+                <span asp-validation-for="FilmPrice" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="Print_UnitPrice"></label>
+                <input type="text" class="form-control" value="@Model.Print_UnitPrice.ToString("#,###.##")" asp-for="Print_UnitPrice">
+                <span asp-validation-for="Print_UnitPrice" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CoreUnitPrice"></label>
+                <input type="text" class="form-control mb-3" value="@Model.CoreUnitPrice.ToString("#,###.##")" asp-for="CoreUnitPrice">
+                <span asp-validation-for="CoreUnitPrice" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="Print_Price"></label>
+                <input type="text" class="form-control text-info" value="@Model.Print_Price.ToString("#,###.##")" asp-for="Print_Price">
+                <span asp-validation-for="Print_Price" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Print_SFilm"></label>
+                <input type="text" class="form-control mb-3" value="@Model.Print_SFilm.ToString("#,###.##")" asp-for="Print_SFilm">
+                <span asp-validation-for="Print_SFilm" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="BoxUnitPrice"></label>
+                <input type="text" class="form-control" value="@Model.BoxUnitPrice.ToString("#,###.##")" asp-for="BoxUnitPrice">
+                <span asp-validation-for="BoxUnitPrice" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="BoxPrice"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.BoxPrice.ToString("#,###.##")" asp-for="BoxPrice">
+                <span asp-validation-for="BoxPrice" class=" alert-danger"></span>
+            </div> 
+            
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="SrinkFilmUnitPrice"></label>
+                <input type="text" class="form-control" value="@Model.SrinkFilmUnitPrice.ToString("#,###.##")" asp-for="SrinkFilmUnitPrice">
+                <span asp-validation-for="SrinkFilmUnitPrice" class=" alert-danger"></span>
+            </div>
+           
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="SrinkFilmPrice"></label>
+                <input type="text" class="form-control text-info mb-3" value="@Model.SrinkFilmPrice.ToString("#,###.##")" asp-for="SrinkFilmPrice">
+                <span asp-validation-for="SrinkFilmPrice" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Total"></label>
+                <input type="text" class="form-control text-success mb-3" value="@Model.Total.ToString("#,###.##")" asp-for="Total">
+                <span asp-validation-for="Total" class=" alert-danger"></span>
+            </div>
+
+             <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="SaleDiscount"></label>
+                <input type="text" class="form-control text-success mb-3" value="@Model.SaleDiscount.ToString("#,###.##")" asp-for="SaleDiscount">
+                <span asp-validation-for="SaleDiscount" class=" alert-danger"></span>
+            </div>
+
+             <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CustomerDiscount"></label>
+                <input type="text" class="form-control text-success mb-3" value="@Model.CustomerDiscount.ToString("#,###.##")" asp-for="CustomerDiscount">
+                <span asp-validation-for="CustomerDiscount" class=" alert-danger"></span>
+            </div>
+
+             <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="ProfitPercent"></label>
+                <input type="text" class="form-control text-success mb-3" value="@Model.ProfitPercent.ToString("#,###.##")" asp-for="ProfitPercent">
+                <span asp-validation-for="ProfitPercent" class=" alert-danger"></span>
+            </div>
+
+             <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="FinalyTotal"></label>
+                <input type="text" class="form-control text-success mb-3" value="@Model.FinalyTotal.ToString("#,###.##")" asp-for="FinalyTotal">
+                <span asp-validation-for="FinalyTotal" class=" alert-danger"></span>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>
+
+
+
+@*//for front end validations*@
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/jquery.amsifyselect.js"></script>
+    }
+//<script src="~/js/jsControllers/Order/CreateOrderDetailNew.js"></script>
+<script>
+    $('#paperList').amsifySelect({
+        searchable: true,
+        type: 'bootstrap'
+    });
+
+</script>
+}

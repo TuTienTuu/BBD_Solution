@@ -1,0 +1,271 @@
+﻿@using ViewModels.Common
+@model ViewModels.Catalog.Quotations.QuotationCreateRequest
+
+@section CSS{
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/amsify.select.css" rel="stylesheet" />
+}
+
+<div class="container-fluid shadow p-5">
+    <form style="max-height:770px; overflow-x:scroll;">
+
+        <div class="row pb-2">
+            <h2 class="col-md-8">Tạo kế hoạch</h2>
+            <div class="col-md-4">
+                <button class="btn btn-lg btn-primary p-2  float-right" id="btnSave"><i class="bi bi-file-plus-fill"></i>Lưu</button>&nbsp;
+                <a asp-controller="Order" asp-action="Index" class="btn btn-lg btn-warning p-2  float-right">Trở lại</a>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <label asp-for="CustomerName"></label>
+                <input type="text" class="form-control mb-3" asp-for="CustomerName">
+                <span asp-validation-for="CustomerName" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                <label asp-for="CompanyName"></label>
+                <input type="text" class="form-control mb-3" asp-for="CompanyName">
+                <span asp-validation-for="CompanyName" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                <label asp-for="Address"></label>
+                <input type="text" class="form-control mb-3 d-inline-block" asp-for="Address">
+                <span asp-validation-for="Address" class=" alert-danger"></span>
+            </div>
+
+
+            @*<div class="form-group col-md-2">
+                <label asp-for="TelephoneNumber"></label>
+
+                @Html.DropDownListFor(model=>model.KnifeCode, (IEnumerable<SelectListItem>)ViewBag.cusList, new { @class = "form-control ", @id = "cusList", @name = "cusList" })
+                <span asp-validation-for="CustomerId" class=" alert-danger"></span>
+                </div>*@
+
+            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <label asp-for="TelephoneNumber"></label>
+                <input type="text" class="form-control mb-3" asp-for="TelephoneNumber">
+                <span asp-validation-for="TelephoneNumber" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <label asp-for="Email"></label>
+                <input type="text" class="form-control mb-3" asp-for="Email">
+                <span asp-validation-for="Email" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                <label asp-for="Website"></label>
+                <input type="text" class="form-control mb-3" asp-for="Website">
+                <span asp-validation-for="Website" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-sm-1 col-md-1 col-lg-1 col-xl-1">
+                <label asp-for="CreatedBy"></label>
+                <input type="text" class="form-control mb-3" asp-for="CreatedBy">
+                <span asp-validation-for="CreatedBy" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label>Danh sách đơn giá</label>
+                @* <select class="form-control mb-3" id="unitPriceList">
+                    <option value="0">Chọn mã hàng</option>
+                    </select>*@
+                @Html.DropDownList("unitPriceList",(IEnumerable<SelectListItem>)ViewBag.unitPriceList, new { @class = "form-control ", @id = "unitPriceList", @name = "unitPriceList" })
+            </div>
+
+            <div class="form-group col-md-2">
+                <label class="d-block opacity-25">aaa</label>
+                <a class="btn btn-success p-2  float-right" id="btnChooseUnitPrice">Chọn</a>
+                <a class="btn btn-info p-2  float-right d-none" id="btnAddUnitPrice">Thêm</a>
+            </div>
+        </div>
+
+
+
+        <div class="form-row" id="unitPriceSelected">
+            <div class="h5 col-12" id="">Danh sách báo giá</div>
+
+            @* <div class="col-xl-3 col-md-6 mb-4" id="">
+                <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                <div class="text-md-start font-weight-bold text-primary text-uppercase mb-1">
+                Mã hàng  <span class="h5 text-xl text-info">5C1.......-001</span>
+                </div>
+                <div class=" row h6 mb-0 font-weight-bold text-gray-500"><div class="col-md-6">Số lượng</div><div class="col-md-6"> <input type="number" class="form-control form-inline" value="0"></div></div>
+                <div class=" row h6 mb-0 font-weight-bold text-gray-500"><div class="col-md-6">M/ Đơn</div><div class="col-md-6"> <input type="number" class="form-control form-inline" value="0"></div></div>
+                </div>
+                <div class="col-auto">
+                <i class="fas fa-product fa-2x text-gray-300"></i>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>*@
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+
+@*//for front end validations*@
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/jquery.amsifyselect.js"></script>
+    }
+<script>
+    $('#cusList').on('change', function () {
+        //alert($(this).val());
+        var productList = $("#productList");
+        productList.empty();
+
+        var url = "/Manager/CustomerForOrder/" + $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            async: true,
+            //data: data,
+            // async: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (mess) {
+
+                console.log(mess);
+                $('#CustomerCode').val(mess.customerCodeForProduct).addClass('text-success');
+                $('#CustomerName').val(mess.customerName).addClass('text-success');
+                //$('#Border').val(mess.border).addClass('text-success');
+                //$('#PaperSize').val(mess.paperSize).addClass('text-success');
+                //$('#KnifeMainCode').val(mess.knifeMainCode).addClass('text-success');
+                //$('#WidthLenght').val(mess.widthLenght).addClass('text-success');
+                //$('#Horizontal').val(mess.horizontal).addClass('text-success');
+                //$('#SplitLine').val(mess.splitLine).addClass('text-success');
+                //$('#KnifeStep').val(mess.knifeStep).addClass('text-success');
+                //$('#StampPerStep').val(mess.stampPerStep).addClass('text-success');
+                //
+                //$('#Center').val(mess.center).addClass('text-success');
+                //$('#KnifeCode').val(mess.knifeCode).addClass('text-success');
+                //$('#Stage_1').val(mess.stage_1).addClass('text-warning');
+                //$('#Stage_2').val(mess.stage_2).addClass('text-warning');
+                //$('#Stage_3').val(mess.stage_3).addClass('text-warning');
+                //$('#Stage_4').val(mess.stage_4).addClass('text-warning');
+                //$('#Stage_5').val(mess.stage_5).addClass('text-warning');
+                //$('#PrintStep').val(mess.printStep).addClass('text-warning');
+                //$('#LayoutName').val(mess.layoutName).addClass('text-warning');
+                //$('#LayoutPosition').val(mess.layoutPosition).addClass('text-warning');
+
+
+                $.each(mess.products, function (index, mess) {
+                    productList.append($("<option></option>")
+                        .attr("value", mess.value).text(mess.text));
+
+                });
+
+                $('#layoutList').amsifySelect({
+                    searchable: true,
+                    type: 'bootstrap'
+                }, 'refresh');
+                //$('#Width').val(mess.width).addClass('text-danger');
+            },
+            error: function (err) {
+                alert("Error: " + err);
+            }
+
+        });
+
+    });
+
+$('#btnChooseUnitPrice').on('click', function () {
+
+    var unitPrice = $("#unitPriceList :selected").val();
+    //alert(unitPrice);
+
+    if (unitPrice <= 0) {
+        alert("Vui lòng chọn mã hàng");
+    }
+    else {
+        var url = "/Quotation/UnitPriceDetail/" + unitPrice;
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            async: true,
+            //data: data,
+            // async: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (mess) {
+
+                console.log(mess);
+
+                $('#btnChooseUnitPrice').addClass('d-none');
+                $('#btnAddUnitPrice').addClass('d-block').removeClass('d-none');
+                //$('#ProductNumber').val(1);
+                $('#unitPriceSelected').append('<div class="col-xl-3 col-md-6 mb-4" id=""> <div class="card border-left-primary shadow h-100 py-2"> <div class="card-body"> <div class="row no-gutters align-items-center"> <div class="col mr-2"> <div class="text-md-start font-weight-bold text-primary text-uppercase mb-1"> Quy cách  <span id="unitPriceCodeSub" class="h5 text-xl text-info">' + mess.resultObj.spec + '</span><input id="unitPrice" type="hidden" class="form-control form-inline" value="' + mess.resultObj.id + '"/> <input id="ordinal" type="hidden" class="form-control form-inline" value="0"/> </div> <div class=" row h6 mb-1 font-weight-bold text-gray-800"><div class="col-md-4">Số lượng</div><div class="col-md-4"> <input id="quantity" type="number" class="form-control form-inline" value="0"></div><div class="col-md-4"> <input id="unitSub" type="text" class="form-control form-inline" value="Cuộn"></div></div> <div class=" row h6 mb-0 font-weight-bold text-gray-800"> </div></div></div><div class="col-auto"><i class="fas fa-product fa-2x text-gray-300"></i> </div> </div> </div> </div> </div>');
+            },
+            error: function (err) {
+                alert("Error: " + err);
+            }
+
+        });
+    }
+});
+
+$('#btnAddUnitPrice').on('click', function () {
+
+    var unitPrice = $("#unitPriceList :selected").val();
+    //alert(unitPrice);
+
+    if (unitPrice <= 0) {
+        alert("Vui lòng chọn mã hàng");
+    }
+    else {
+        var isExist = false;
+        var url = "/Quotation/UnitPriceDetail/" + unitPrice;
+        $('div#unitPriceSelected').each(function (index) {
+
+            if ($(this).find('div input#unitPrice').val() == unitPrice) {
+                isExist = true;
+            }
+//            console.log(isExist);
+        });
+
+        if (!isExist) {
+            $.ajax({
+                type: "GET",
+                url: url,
+                async: true,
+                //data: data,
+                // async: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function (mess) {
+
+                    console.log(mess);
+
+                    //alert(productTag);
+
+                    //var totalProduct = $('#ProductNumber').val();
+                    //$('#ProductNumber').val(parseInt(totalProduct) + 1);
+                    $('#unitPriceSelected').append('<div class="col-xl-3 col-md-6 mb-4" id=""> <div class="card border-left-primary shadow h-100 py-2"> <div class="card-body"> <div class="row no-gutters align-items-center"> <div class="col mr-2"> <div class="text-md-start font-weight-bold text-primary text-uppercase mb-1"> Quy cách  <span id="unitPriceCodeSub" class="h5 text-xl text-info">' + mess.resultObj.spec + '</span><input id="unitPrice" type="hidden" class="form-control form-inline" value="' + mess.resultObj.id + '"/> <input id="ordinal" type="hidden" class="form-control form-inline" value="0"/> </div> <div class=" row h6 mb-1 font-weight-bold text-gray-800"><div class="col-md-4">Số lượng</div><div class="col-md-4"> <input id="quantity" type="number" class="form-control form-inline" value="0"></div><div class="col-md-4"> <input id="unitSub" type="text" class="form-control form-inline" value="Cuộn"></div></div> <div class=" row h6 mb-0 font-weight-bold text-gray-800"> </div></div></div><div class="col-auto"><i class="fas fa-product fa-2x text-gray-300"></i> </div> </div> </div> </div> </div>');
+                    //.append('<div class="col-xl-3 col-md-6 mb-4" id="unitPriceId"> <div class="card border-left-primary shadow h-100 py-2"> <div class="card-body"> <div class="row no-gutters align-items-center"> <div class="col mr-2"> <div class="text-md-start font-weight-bold text-primary text-uppercase mb-1"> Mã hàng  <span id="productCodeSub" class="h5 text-xl text-info">' + mess.productCode + '</span><input id="product" type="hidden" class="form-control form-inline" value="' + mess.productId + '"/> <input id="ordinal" type="hidden" class="form-control form-inline" value="' + $('#ProductNumber').val() + '"/> </div> <div class=" row h6 mb-1 font-weight-bold text-gray-800"><div class="col-md-4">Số lượng</div><div class="col-md-4"> <input id="quantity" type="number" class="form-control form-inline" value="0"></div><div class="col-md-4"> <input id="unitSub" type="text" class="form-control form-inline" value="' + $('#unit :selected').text() + '"></div></div> <div class=" row h6 mb-0 font-weight-bold text-gray-800"><div class="col-md-4">M/ Đơn</div><div class="col-md-4"> <input id="subtotal" type="number" class="form-control form-inline" value="0"></div></div></div><div class="col-auto"><i class="fas fa-product fa-2x text-gray-300"></i> </div> </div> </div> </div> </div>');
+
+                },
+                error: function (err) {
+                    alert("Error: " + err);
+                }
+
+            });
+        }
+    }
+});
+</script>
+}

@@ -1,0 +1,12 @@
+D:\Projects\ViewModels\bin\Release\net6.0\ViewModels.deps.json
+D:\Projects\ViewModels\bin\Release\net6.0\ViewModels.dll
+D:\Projects\ViewModels\bin\Release\net6.0\ViewModels.pdb
+D:\Projects\ViewModels\obj\Release\net6.0\ViewModels.csproj.AssemblyReference.cache
+D:\Projects\ViewModels\obj\Release\net6.0\ViewModels.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\ViewModels\obj\Release\net6.0\ViewModels.AssemblyInfoInputs.cache
+D:\Projects\ViewModels\obj\Release\net6.0\ViewModels.AssemblyInfo.cs
+D:\Projects\ViewModels\obj\Release\net6.0\ViewModels.csproj.CoreCompileInputs.cache
+D:\Projects\ViewModels\obj\Release\net6.0\ViewModels.dll
+D:\Projects\ViewModels\obj\Release\net6.0\refint\ViewModels.dll
+D:\Projects\ViewModels\obj\Release\net6.0\ViewModels.pdb
+D:\Projects\ViewModels\obj\Release\net6.0\ref\ViewModels.dll

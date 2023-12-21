@@ -1,0 +1,9 @@
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\appsettings.Development.json
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\appsettings.json
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\SystemAPI.pdb
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\Microsoft.Data.SqlClient.SNI.dll
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\Application.pdb
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\Data.pdb
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\ViewModels.pdb
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\Utilities.pdb
+D:\Projects\SystemAPI\obj\Release\net6.0\win-x86\PubTmp\Out\SystemAPI.exe

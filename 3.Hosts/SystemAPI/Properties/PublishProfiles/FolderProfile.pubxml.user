@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Projects\Publish\SystemAPI</_PublishTargetUrl>
+    <History>True|2023-12-18T13:32:43.3385769Z;True|2023-12-09T18:53:12.9879773+07:00;True|2023-11-11T11:50:11.0965087+07:00;True|2023-11-11T08:27:55.6078389+07:00;True|2023-11-10T22:22:59.8537841+07:00;True|2023-11-10T21:50:25.7275259+07:00;True|2023-11-10T17:23:38.0323563+07:00;</History>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+  </PropertyGroup>
+</Project>

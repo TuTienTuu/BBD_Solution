@@ -1,0 +1,17 @@
+D:\Projects\ApiIntergration\bin\Release\net6.0\ApiIntergration.deps.json
+D:\Projects\ApiIntergration\bin\Release\net6.0\ApiIntergration.dll
+D:\Projects\ApiIntergration\bin\Release\net6.0\ApiIntergration.pdb
+D:\Projects\ApiIntergration\bin\Release\net6.0\Utilities.dll
+D:\Projects\ApiIntergration\bin\Release\net6.0\ViewModels.dll
+D:\Projects\ApiIntergration\bin\Release\net6.0\Utilities.pdb
+D:\Projects\ApiIntergration\bin\Release\net6.0\ViewModels.pdb
+D:\Projects\ApiIntergration\obj\Release\net6.0\ApiIntergration.csproj.AssemblyReference.cache
+D:\Projects\ApiIntergration\obj\Release\net6.0\ApiIntergration.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\ApiIntergration\obj\Release\net6.0\ApiIntergration.AssemblyInfoInputs.cache
+D:\Projects\ApiIntergration\obj\Release\net6.0\ApiIntergration.AssemblyInfo.cs
+D:\Projects\ApiIntergration\obj\Release\net6.0\ApiIntergration.csproj.CoreCompileInputs.cache
+D:\Projects\ApiIntergration\obj\Release\net6.0\ApiIntergration.csproj.CopyComplete
+D:\Projects\ApiIntergration\obj\Release\net6.0\ApiIntergration.dll
+D:\Projects\ApiIntergration\obj\Release\net6.0\refint\ApiIntergration.dll
+D:\Projects\ApiIntergration\obj\Release\net6.0\ApiIntergration.pdb
+D:\Projects\ApiIntergration\obj\Release\net6.0\ref\ApiIntergration.dll

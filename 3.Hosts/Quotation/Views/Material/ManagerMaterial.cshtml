@@ -1,0 +1,612 @@
+﻿@using ViewModels.Common
+@model ApiResult<IEnumerable<ViewModels.Catalog.Materials.MaterialViewModel>>
+@section Scripts{
+   @* <script src="~/js/jsControllers/knifeController/Index.js"></script>*@
+}
+
+
+<div class="row">
+    <div class="col-8">
+        @* <h1>@ViewData["Title"]</h1>*@
+        <h1>Danh sách nguyên liệu</h1>
+    </div>
+    @* <div class="col-4 d-flex justify-content-center">
+        @if (TempData["ResultOk"] != null)
+        {
+        <h4 aria-hidden="true" id="alertMesss" class="alert-success">@TempData["ResultOk"]</h4>
+        }
+        else
+        {
+        <h4 type="button" class="close" data-dismiss="alert" aria-label="Close">
+        </h4>
+        }
+        </div>*@
+    <div class="container-fluid">
+        <div class="row">
+
+            <form method="get" enctype="multipart/form-data" class="mb-1 w-100">
+                <div class="row">
+                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Chất liệu</div>
+                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">
+                        <input type="text" class="form-control border-0 small" name="material" id="material" value="@ViewData["material"]" aria-describedby="basic-addon2" />
+                    </div>
+                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Loại</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-right">
+                        @Html.DropDownList("materialTypeList", null, new { @class = "form-control d-sm-inline-block", @id = "materialTypeList", @name = "materialTypeList" })
+                    </div>
+
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 float-right">
+                        <button class="btn btn-primary" type="submit" id="btnSearch">
+                            Tìm kiếm
+                        </button>
+                        <a class="btn btn-success" onclick="show(0)" data-toggle="modal" data-target="#myModal">
+                            Thêm mới
+                        </a>
+
+
+                        @* @if (Model.Count() > 0)
+                            {
+                            <a class="btn btn-info ml-2" id="btnExport">
+                            Export Excel
+                            </a>
+                            }*@
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class=" table-responsive tableFixHead" style="max-height:750px; overflow-y:scroll;">
+        <table class="table table-bordered  table-hover" cellspacing="0" width="100%" style="overflow-x:scroll;  border-spacing: 0px;" id="table_id">
+            <thead>
+                <tr>
+                    <th scope="col"><b style="opacity:0%;">..................</b>#<b style="opacity:0%;">..................</b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Loại<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Tênhàng<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Chấtliệu&size<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>ĐVT<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>GiáchưaVAT<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>GiáđãVAT<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Ghichú<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Nhàcungcấp<b style="opacity:0%;"></b></th>
+
+                </tr>
+            </thead>
+            <tbody style="font-size:12px;">
+
+                @*<tr class="@(item.IsDeleted == true?"text-danger":"")">*@
+                @if (Model.ResultObj.Count() > 0)
+                {
+                    @foreach (var item in Model.ResultObj)
+                    {
+                        <tr class="">
+                            <td class="p-0 text-center" style="font-size:10px; line-height:13px;">
+                                <a class="btn btn-sm btn-info" onclick="show(@item.ID)" data-toggle="modal" data-target="#myModal">Sửa</a>
+                                <a class="btn btn-sm btn-warning" onclick="showPrice(@item.ID)" data-toggle="modal" data-target="#updatePriceModal">Chỉnh giá</a>
+                                <a class="btn btn-sm btn-danger" onclick="deleteData(@item.ID)">Xóa</a>
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.MaterialTypeName
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.MaterialName
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Size
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Unit
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Price.ToString("#,#")
+                            </td>
+                            <td class="p-0 text-center">
+                                @( ((double)item.Price + (double)item.Price*0.1).ToString("#,#"))
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Note
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.Supplier
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="4">Không có dữ liệu</td></tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl modal-lg model-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body container">
+                <h3 class="plan-title text-center">Thông tin giấy</h3>
+                <div class="row general">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-sm-12 mb-8">
+
+                        <div class="edit-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="ID" value="0" />
+                                </div>
+
+                                <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                                    <label class="control-label  label-text">Loại:</label>
+                                    @Html.DropDownList("materialTypeList", null, new { @class = "form-control d-sm-inline-block", @id = "materialTypeListCreate", @name = "materialTypeListCreate" })
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Code:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="code" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Tên hàng:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="materialName" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Chất liệu, size:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="size" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">ĐVT:</label>
+                                      @Html.DropDownList("unit", null, new { @class = "form-control d-sm-inline-block", @id = "unit", @name = "unit" })
+                                    @*<input type="text" class="form-inline form-control  d-sm-inline-block" id="unit">*@
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="price">
+                                </div>
+
+                                <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xl-6 mb-1">
+                                    <label class="control-label  label-text">Ghi chú:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="note">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <label class="control-label  label-text">NCC:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="supplier">
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="form-group" id="action">
+                                <input type="button" value="Lưu" onclick="save();" class="btn btn-primary" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="updatePriceModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl modal-lg model-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body container">
+                <h3 class="plan-title text-center">Thông tin giấy</h3>
+                <div class="row general">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-sm-12 mb-8">
+
+                        <div class="edit-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="updateID" value="0" />
+
+
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá cũ:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="oldPrice" disabled="disabled">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá mới:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="newPrice">
+                                </div>
+
+                                <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xl-6 mb-1">
+                                    <label class="control-label  label-text">Ghi chú:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="noteUpdate">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" id="action">
+                                <input type="button" value="Lưu" onclick="updatePrice();" class="btn btn-primary" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="updatePriceModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl modal-lg model-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body container">
+                <h3 class="plan-title text-center">Thông tin giấy</h3>
+                <div class="row general">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-sm-12 mb-8">
+
+                        <div class="edit-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="updateID" value="0" />
+
+
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá cũ:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="oldPrice" disabled="disabled">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá mới:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="newPrice">
+                                </div>
+
+                                <div class="form-group col-md-6 col-lg-6 col-sm-6 col-xl-6 mb-1">
+                                    <label class="control-label  label-text">Ghi chú:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="noteUpdate">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" id="action">
+                                <input type="button" value="Lưu" onclick="updatePrice();" class="btn btn-primary" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function show(id) {
+
+       if(id == 0){
+             $('#ID').val(0);
+           // $('#glueName').val("");
+            $("#supplier").val("");
+            $("#code").val();
+            $("#materialTypeListCreate > [value='0']").attr("selected",true);
+            $("#materialCode").val();
+            $("#size").val("");
+            $("#price").val("").prop("disabled", false);
+            $("#unit > [value='Chọn đơn vị']").attr("selected",true);
+            //$("#unit").val("");
+            $("#note").val(" ");
+
+       }
+       else{
+       var url = "/Material/MaterialDetail/" + id;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+            console.log(mess);
+            $('#ID').val(mess.resultObj.id);
+
+            $("#materialTypeListCreate > [value='" + mess.resultObj.materialTypeID + "']").attr("selected",true);
+            $("#supplier").val(mess.resultObj.supplier);
+            $("#code").val(mess.resultObj.materialCode);
+            $("#materialName").val(mess.resultObj.materialName);
+            $("#size").val(mess.resultObj.size);
+            $("#price").val(mess.resultObj.price).prop("disabled", true);
+            $("#unit > [value='" + mess.resultObj.unit + "']").attr("selected",true);
+            //$("#unit").val(mess.resultObj.unit);
+            $("#note").val(mess.resultObj.note);
+           // $('#lossConst').val(mess.lossConst);
+        },
+        error: function (err) {
+            alert("Error: " + err.responseText);
+        }
+
+    });
+    }
+    }
+</script>
+
+<script type="text/javascript">
+    function deleteData(id) {
+       if (confirm('Bạn có chắc chắn muốn xóa?')) {
+            var url = "/Material/DeleteMaterial/" + id;
+
+    $.ajax({
+        type: "DELETE",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+
+                if (mess.isSuccessResult == false) {
+                    //$("#alertMesss").removeClass("text-success");
+                    //$("#alertMesss").addClass("text-danger");
+                    //$("#alertMesss").html(mess.result);
+                    alert(mess.result);
+                }
+                else {
+                    //$("#alertMesss").removeClass("text-danger");
+                    //$("#alertMesss").addClass("text-success");
+                    //$("#alertMesss").html(mess.result);
+                    alert(mess.result);
+                }
+                location.reload();
+
+            },
+            error: function (err) {
+                //$("#alertMesss").removeClass("text-success");
+                //$("#alertMesss").addClass("text-danger");
+                //$("#alertMesss").html("Error: " + err);
+                alert("Error: " + err);
+            }
+
+    });
+       } else {
+           return false;
+       }
+    }
+</script>
+
+<script type="text/javascript">
+
+        function save() {
+        if (confirm("Bạn có chắc chắn muốn lưu?") == true) {
+            var data = new FormData();
+            //var fileUpload = $("#attachment").get(0);
+            //var countFile = $("#attachment")[0].files.length;
+            //var files = fileUpload.files;
+             var id = $("#ID").val();
+             var url;
+             if(id <= 0)
+             {
+                  url = "/Material/CreateMaterial";
+                  method ="POST";
+             }
+             else{
+                  url = "/Material/UpdateMaterial/"+id;
+                   method ="POST";
+             }
+
+            //$("#productId").val(0);
+
+          // var soleName = $("#soleName").val();
+            var supplier = $("#supplier").val();
+            var materialCode = $("#code").val();
+            var materialTypeId = $("#materialTypeListCreate option:selected").val();
+            var materialTypeName =  $("#materialTypeListCreate option:selected").text();
+            //var materialCode = $("#materialCode").val();
+            var materialName = $("#materialName").val();
+            var size = $("#size").val();
+            var price = $("#price").val();
+            var unit = $("#unit option:selected").val();
+            //var unit = $("#unit").val();
+            var note = $("#note").val();
+            var model;
+            if(id>0)
+            {
+                model = { ID: id, Supplier: supplier, MaterialCode: materialCode, MaterialName: materialName, MaterialTypeID: materialTypeId, MaterialTypeName: materialTypeName, Size: size, Unit: unit, Note:note};
+            }
+            else
+            {
+                   model = { ID: id, Supplier: supplier, MaterialCode: materialCode, MaterialName: materialName, MaterialTypeID: materialTypeId, MaterialTypeName: materialTypeName, Size: size, Unit: unit, Price: price, Note:note};
+            }
+
+
+            console.log(model);
+            $.ajax({
+                type: method,
+                url: url,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(model),
+                async: true,
+                success: function (mess) {
+                    if (mess.isSuccessResult == false) {
+                        $("#msg").removeClass("text-success");
+                        $("#msg").addClass("text-danger");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                    }
+                    else {
+                        $("#msg").removeClass("text-danger");
+                        $("#msg").addClass("text-success");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                        location.reload();
+                    }
+
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+
+                },
+                error: function (err) {
+
+                    $("#msg").removeClass("text-success");
+                    $("#msg").addClass("text-danger");
+                    $("#msg").html("Error: " + err);
+                    alert(err.responseText);
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+                }
+
+            });
+        }
+    }
+</script>
+
+<script type="text/javascript">
+
+        function updatePrice() {
+        if (confirm("Bạn có chắc chắn muốn lưu?") == true) {
+            var data = new FormData();
+            //var fileUpload = $("#attachment").get(0);
+            //var countFile = $("#attachment")[0].files.length;
+            //var files = fileUpload.files;
+             var id = $("#updateID").val();
+             var url;
+
+                  url = "/Material/UpdateMaterialPrice/"+id;
+                   method ="POST";
+            //$("#productId").val(0);
+
+          // var soleName = $("#soleName").val();
+            var oldPrice = $("#oldPrice").val();
+            var newPrice = $("#newPrice").val();
+            var note = $("#noteUpdate").val();
+
+            var model = { ID: id, OldPrice: oldPrice, NewPrice: newPrice, Note:note };
+            console.log(model);
+            $.ajax({
+                type: method,
+                url: url,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(model),
+                async: true,
+                success: function (mess) {
+                    if (mess.isSuccessResult == false) {
+                        $("#msg").removeClass("text-success");
+                        $("#msg").addClass("text-danger");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                    }
+                    else {
+                        $("#msg").removeClass("text-danger");
+                        $("#msg").addClass("text-success");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                        location.reload();
+                    }
+
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+
+                },
+                error: function (err) {
+
+                    $("#msg").removeClass("text-success");
+                    $("#msg").addClass("text-danger");
+                    $("#msg").html("Error: " + err);
+                    alert(err.responseText);
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+                }
+
+            });
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    function showPrice(id) {
+
+       var url = "/Material/GetMaterialPriceById/" + id;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+            console.log(mess);
+            $('#updateID').val(mess.resultObj.id);
+
+            $('#oldPrice').val(mess.resultObj.oldPrice);
+            $('#newPrice').val(mess.resultObj.newPrice);
+            $("#noteUpdate").val(mess.resultObj.note);
+
+           // $('#lossConst').val(mess.lossConst);
+        },
+        error: function (err) {
+            alert("Error: " + err.responseText);
+        }
+
+    });
+
+    }
+</script>
+@section CSS{
+<link href="~/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+@*<link href="~/css/viewTable.css" rel="stylesheet" />*@
+<style>
+    /*on top header */
+    .tableFixHead {
+        overflow: auto;
+        height: auto;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+    /* Just common table stuff. Really. */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px 16px;
+    }
+
+    th {
+        background: #eee;
+    }
+</style>
+}

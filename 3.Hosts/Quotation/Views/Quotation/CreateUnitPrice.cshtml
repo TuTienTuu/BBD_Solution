@@ -1,0 +1,357 @@
+﻿@using ViewModels.Common
+@model ViewModels.Catalog.UnitPrices.UnitPriceCreateRequest
+
+@section CSS{
+<link href="~/css/site.css" rel="stylesheet" />
+<link href="~/css/amsify.select.css" rel="stylesheet" />
+}
+
+<div class="container-fluid shadow p-5">
+    <form style="max-height:770px; overflow-x:scroll;" method="post">
+
+        <div class="row pb-2">
+            <h2 class="col-md-8">Tạo đơn giá</h2>
+            <div class="col-md-4">
+                <button class="btn btn-lg btn-primary p-2 float-right" id="btnSave" type="submit"><i class="bi bi-file-plus-fill"></i>Lưu</button>&nbsp;
+                <a asp-controller="Quotation" asp-action="Index" class="btn btn-lg btn-warning p-2  float-right">Trở lại</a>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 ">
+                <label asp-for="Width"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="Width">
+                @*  @Html.DropDownList("orderType", (IEnumerable<SelectListItem>)ViewBag.orderType, new { @class = "form-control", @id = "orderType", @name = "orderType" })
+                    @Html.DropDownList("orderTypeCode", null, new { @class = "form-control d-none", @id = "orderTypeCode", @name = "orderTypeCode" })*@
+                <span asp-validation-for="Width" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1">
+                <label asp-for="Height"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="Height" id="Height">
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="NumberStampHorizontal"></label>
+                <input type="number" class="form-control mb-3 d-inline-block" value="0" asp-for="NumberStampHorizontal">
+                <span asp-validation-for="NumberStampHorizontal" class=" alert-danger"></span>
+            </div>
+
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="NumberRowStamp"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="NumberRowStamp" id="NumberRowStamp">
+                @*    @Html.DropDownListFor(model=>model.KnifeCode, (IEnumerable<SelectListItem>)ViewBag.cusList, new { @class = "form-control ", @id = "cusList", @name = "cusList" })*@
+                <span asp-validation-for="NumberRowStamp" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Border"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="Border">
+                <span asp-validation-for="Border" class=" alert-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1">
+                <label asp-for="Midle"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="Midle">
+                <span asp-validation-for="Midle" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="Gap"></label>
+                <input type="number" class="form-control" value="0" asp-for="Gap">
+                <span asp-validation-for="Gap" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="RowStampHaveGap"></label>
+                <input type="number" class="form-control" value="0" asp-for="RowStampHaveGap">
+                <span asp-validation-for="RowStampHaveGap" class=" alert-danger"></span>
+            </div>
+
+            @*<div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label>Danh sách mã hàng</label>
+                <select class="form-control mb-3" id="productList">
+                    <option value="0">Chọn mã hàng</option>
+                </select>
+            </div>*@
+
+           @* <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 ">
+                <label class="d-block opacity-25">aaa</label>
+                <a class="btn btn-success p-2  float-right" id="btnChooseProduct">Chọn</a>
+                <a class="btn btn-info p-2  float-right d-none" id="btnAddProduct">Thêm</a>
+            </div>*@
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="Characteristic"></label>
+                <input class="form-control" asp-for="Characteristic">
+                <span asp-validation-for="Characteristic" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="Point"></label>
+                <input type="number" class="form-control" value="0" asp-for="Point">
+                <span asp-validation-for="Point" class=" alert-danger"></span>
+            </div>
+
+            @* <div class="form-group col-md-2">
+                <label asp-for="CreatDate"></label>
+                <input type="date" class="form-control mb-3" value="@* DateTime.Now.ToString("yyyy-MM-dd")" asp-for="OrderDate">
+                <span asp-validation-for="OrderDate" class=" alert-danger"></span>
+                </div>
+                <div class="form-group col-md-2 mb-3">
+                <label asp-for="DeliveryDate"></label>
+                <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" asp-for="DeliveryDate">
+                <span asp-validation-for="DeliveryDate" class=" alert-danger"></span>
+                </div>*@
+
+            @*  <div class="form-group col-md-2 mb-3">
+                <label>Sử dụng dao có sãn?</label>
+
+                <label class="switch d-block">
+                <input type="checkbox" checked="checked" id="usingKnifeValue">
+                <span class="slider round" id="usingKnife"></span>
+                </label>
+                <span class=" alert-danger"></span>
+                </div>*@
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="SplitLine"></label>
+                @*   @Html.DropDownListFor(model=>model.KnifeCode, (IEnumerable<SelectListItem>)ViewBag.knifeList, new { @class = "form-control js-searchBox    ", @id = "knifeList", @name = "knifeList" })*@
+                <input type="number" class="form-control" value="0" asp-for="SplitLine">
+                <span asp-validation-for="SplitLine" class=" alert-danger"></span>
+            </div>
+
+       
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="MetterPerRoll"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="MetterPerRoll">
+                <span asp-validation-for="MetterPerRoll" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="StampPerRoll"></label>
+                <input type="number" class="form-control" value="0" asp-for="StampPerRoll">
+                <span asp-validation-for="StampPerRoll" class=" alert-danger"></span>
+            </div>
+            @* <div class="form-group col-md-4 mb-3">
+                <label asp-for="ProductContent"></label>
+                <textarea class="form-control" asp-for="ProductContent"></textarea>
+                <span asp-validation-for="ProductContent" class=" alert-danger"></span>
+                </div>*@
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1">
+                <label asp-for="Quantity"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="Quantity">
+                <span asp-validation-for="Quantity" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 mb-3">
+                <label asp-for="Unit"></label>
+                <input class="form-control" asp-for="Unit">
+                <span asp-validation-for="Unit" class=" alert-danger"></span>
+            </div>
+
+            @*<div class="form-group col-md-1">
+                <label asp-for="MetterPerRoll"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="MetterPerRoll">
+                <span asp-validation-for="MetterPerRoll" class=" alert-danger"></span>
+                </div>
+                <div class="form-group col-md-1 mb-3">
+                <label asp-for="StampPerRoll"></label>
+                <input type="number" class="form-control" value="0" asp-for="StampPerRoll">
+                <span asp-validation-for="StampPerRoll" class=" alert-danger"></span>
+                </div>*@
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="PaperCode"></label>
+                @*<input type="text" class="form-control" value="0" asp-for="PaperCode">*@
+                 @Html.DropDownListFor(model=>model.PaperCode, (IEnumerable<SelectListItem>)ViewBag.paperList, new { @class = "form-control ", @id = "paperList", @name = "paperList" })
+                <span asp-validation-for="PaperCode" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 mb-3">
+                <label asp-for="TypeCopy"></label>
+                @*<input type="text" class="form-control" asp-for="TypeCopy">*@
+                @Html.DropDownListFor(model=>model.TypeCopy, (IEnumerable<SelectListItem>)ViewBag.printType, new { @class = "form-control ", @id = "printType", @name = "printType" })
+                <span asp-validation-for="TypeCopy" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 ">
+                <label asp-for="ColorType"></label>
+                @*<input type="text" class="form-control mb-3" asp-for="ColorType">*@
+                @Html.DropDownListFor(model=>model.ColorType, (IEnumerable<SelectListItem>)ViewBag.ink, new { @class = "form-control ", @id = "ink", @name = "ink" })
+                <span asp-validation-for="ColorType" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 mb-3">
+                <label asp-for="NumberOfColor"></label>
+                <input type="number" class="form-control" value="0" asp-for="NumberOfColor">
+                <span asp-validation-for="NumberOfColor" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 mb-3">
+                <label asp-for="NumberOfCode"></label>
+                <input type="number" class="form-control" value="0" asp-for="NumberOfCode">
+                <span asp-validation-for="NumberOfCode" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 ">
+                <label asp-for="AreaPrint"></label>
+                <input type="number" class="form-control mb-3" asp-for="AreaPrint" value="0">
+                <span class=" alert-danger"></span>
+            </div>
+
+            @* <div class="form-group col-md-1 mb-3">
+                <label asp-for="Unit"></label>
+                @Html.DropDownListFor(model=>model.Unit, (IEnumerable<SelectListItem>)ViewBag.unit, new { @class = "form-control", @id = "unit", @name = "unit" })
+                <span asp-validation-for="Unit" class=" alert-danger"></span>
+                </div>*@
+
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 ">
+                <label asp-for="Lamination"></label>
+                @*<input type="text" class="form-control mb-3" asp-for="Lamination">*@
+                @Html.DropDownListFor(model=>model.Lamination, (IEnumerable<SelectListItem>)ViewBag.lamination, new { @class = "form-control ", @id = "lamination", @name = "lamination" })
+                <span asp-validation-for="Lamination" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 col-sm-1 col-lg-1 col-xl-1 mb-3">
+                <label asp-for="Core"></label>
+                @*<input type="number" class="form-control" value="0" asp-for="Core">*@
+                @Html.DropDownListFor(model=>model.Core, (IEnumerable<SelectListItem>)ViewBag.core, new { @class = "form-control ", @id = "core", @name = "core" })
+                <span asp-validation-for="Core" class=" alert-danger"></span>
+            </div>
+          
+        </div>
+
+        <div class="form-row" id="productListSelected">
+            <div class="h5 col-12" id="">Danh sách mã hàng</div>
+
+            @* <div class="col-xl-3 col-md-6 mb-4" id="">
+                <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                <div class="text-md-start font-weight-bold text-primary text-uppercase mb-1">
+                Mã hàng  <span class="h5 text-xl text-info">5C1.......-001</span>
+                </div>
+                <div class=" row h6 mb-0 font-weight-bold text-gray-500"><div class="col-md-6">Số lượng</div><div class="col-md-6"> <input type="number" class="form-control form-inline" value="0"></div></div>
+                <div class=" row h6 mb-0 font-weight-bold text-gray-500"><div class="col-md-6">M/ Đơn</div><div class="col-md-6"> <input type="number" class="form-control form-inline" value="0"></div></div>
+                </div>
+                <div class="col-auto">
+                <i class="fas fa-product fa-2x text-gray-300"></i>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>*@
+
+        </div>
+
+        <div class="form-row">
+               <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="MachinePrint"></label>
+                @* <input type="text" class="form-control" asp-for="MachinePrint">*@
+                @Html.DropDownListFor(model=>model.MachinePrint, (IEnumerable<SelectListItem>)ViewBag.printMachine, new { @class = "form-control ", @id = "printMachine", @name = "printMachine" })
+                <span asp-validation-for="MachinePrint" class=" alert-danger"></span>
+            </div>
+
+            
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="MachinePressedPowder"></label>
+                @*<input type="text" class="form-control" asp-for="MachineDieCutting">*@
+                @Html.DropDownListFor(model=>model.MachinePressedPowder, (IEnumerable<SelectListItem>)ViewBag.compressMachine, new { @class = "form-control ", @id = "compressMachine", @name = "compressMachine" })
+                <span asp-validation-for="MachineDieCutting" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="MachineDieCutting"></label>
+                @*<input type="text" class="form-control" asp-for="MachineDieCutting">*@
+                @Html.DropDownListFor(model=>model.MachineDieCutting, (IEnumerable<SelectListItem>)ViewBag.dieCuttingMachine, new { @class = "form-control ", @id = "dieCuttingMachine", @name = "dieCuttingMachine" })
+                <span asp-validation-for="MachineDieCutting" class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2 mb-3">
+                <label asp-for="MachineDivide"></label>
+                @*<input type="text" class="form-control" asp-for="MachineDivide">*@
+                @Html.DropDownListFor(model=>model.MachineDivide, (IEnumerable<SelectListItem>)ViewBag.divideMachine, new { @class = "form-control ", @id = "divideMachine", @name = "divideMachine" })
+                <span asp-validation-for="MachineDivide" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="MachinePacking"></label>
+                @*<input type="text" class="form-control mb-3" asp-for="MachinePacking">*@
+                @Html.DropDownListFor(model=>model.MachinePacking, (IEnumerable<SelectListItem>)ViewBag.box, new { @class = "form-control ", @id = "box", @name = "box" })
+                <span asp-validation-for="MachinePacking" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="KnifeNumber"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="KnifeNumber">
+                <span asp-validation-for="KnifeNumber" class=" alert-danger"></span>
+            </div>
+
+             <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="KnifeOtherFee"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="KnifeOtherFee">
+                <span asp-validation-for="KnifeOtherFee" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="SaleDiscount"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="SaleDiscount">
+                <span asp-validation-for="SaleDiscount" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="CustomerDiscount"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="CustomerDiscount">
+                <span asp-validation-for="CustomerDiscount" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="ProfitPercent"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="ProfitPercent">
+                <span asp-validation-for="ProfitPercent" class=" alert-danger"></span>
+            </div>
+
+             <div class="h5 col-12" id="">Kích thước thùng</div>
+             <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_long"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="Box_long">
+                <span asp-validation-for="Box_long" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_width"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="Box_width">
+                <span asp-validation-for="Box_width" class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2 col-sm-2 col-lg-2 col-xl-2">
+                <label asp-for="Box_height"></label>
+                <input type="number" class="form-control mb-3" value="0" asp-for="Box_height">
+                <span asp-validation-for="Box_height" class=" alert-danger"></span>
+            </div>
+        </div>
+
+
+    </form>
+
+</div>
+
+
+
+@*//for front end validations*@
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/jquery.amsifyselect.js"></script>
+    }
+//<script src="~/js/jsControllers/Order/CreateOrderDetailNew.js"></script>
+<script>
+$('#paperList').amsifySelect({
+    searchable: true,
+    type: 'bootstrap'
+});
+
+</script>
+}

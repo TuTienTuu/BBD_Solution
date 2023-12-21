@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Projects\Publish\QuotationAPI</_PublishTargetUrl>
+    <History>True|2023-12-18T14:53:29.6232266Z;True|2023-12-15T20:41:38.1110144+07:00;True|2023-12-10T15:33:51.9067733+07:00;True|2023-12-09T16:01:44.8454219+07:00;True|2023-12-09T15:32:21.0439390+07:00;True|2023-11-06T14:36:38.3032105+07:00;False|2023-11-06T14:10:21.4643446+07:00;False|2023-11-06T14:09:48.2926444+07:00;False|2023-11-06T14:09:00.2318032+07:00;False|2023-11-06T14:05:54.1509151+07:00;False|2023-11-02T20:48:12.5661951+07:00;False|2023-11-02T20:45:36.1291969+07:00;</History>
+  </PropertyGroup>
+</Project>

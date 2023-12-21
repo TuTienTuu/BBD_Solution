@@ -1,0 +1,195 @@
+﻿@section CSS{
+<link href="~/css/site.css" rel="stylesheet" />
+
+}
+
+<div class="container-fluid shadow p-5">
+    <form method="post" style="max-height:650px;">
+
+        <div class="row pb-2">
+            <h2 class="col-md-6">Tạo thông tin Decal</h2>
+            <div class="col-md-2">
+                @if (TempData["ResultOk"] != null)
+                {
+                    <h4 aria-hidden="true" id="alertMesss" class="alert-success">@TempData["ResultOk"]</h4>
+                }
+                else
+                {
+                    <h4 type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    </h4>
+                }
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-lg btn-primary p-2  float-right"><i class="bi bi-file-plus-fill"></i>Lưu</button>&nbsp;
+                <a asp-controller="Manager" asp-action="PaperList" class="btn btn-lg btn-warning p-2  float-right">Trở lại</a>
+            </div>
+        </div>
+
+        <div asp-validation-summary="All"></div>
+
+        <div class="form-row">
+            <div class="form-group col-md-1">
+                <label>B-Code</label>
+                <input type="text" class="form-control mb-1">
+                <span class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label>Mã giấy</label>
+                <input type="text" class="form-control mb-1">
+                <span class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1">
+                <label>Nhà cung cấp</label>
+                <input type="text" class="form-control mb-1">
+                <span class=" alert-danger"></span>
+            </div>
+
+
+            @* <div class="form-group col-md-2">
+                <label asp-for="KnifeSpec"></label>
+                <input type="text" class="form-control mb-1" asp-for="KnifeSpec">
+                <span asp-validation-for="KnifeSpec" class=" alert-danger"></span>
+                </div>*@
+            @* <div class="form-group col-md-2">
+                <label asp-for="KnifeTypeID"></label>
+                @Html.DropDownListFor(model=>model.KnifeTypeID, (IEnumerable<SelectListItem>)ViewBag.knifeType, new { @class = "form-control mb-1", @id = "knifeType", @name = "knifeType" })
+                <span asp-validation-for="KnifeTypeID" class=" alert-danger"></span>
+                </div>*@
+
+            <div class="form-group col-md-1">
+                <label>Tên hàng</label>
+                 <select type="text" class="form-control">
+                    <option>Decal</option>
+                    <option>PP</option>
+                    <option>PE</option>
+                </select>
+                <span class=" alert-danger"></span>
+            </div>
+             <div class="form-group col-md-1">
+                <label>Loại</label>
+                 <select type="text" class="form-control">
+                    <option>Thường</option>
+                    <option>Nhám</option>
+                    <option>Nhiệt</option>
+                </select>
+                <span class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Mô tả - đặc tính</label>
+                <input type="text" class="form-control mb-1">
+                <span class=" alert-danger"></span>
+            </div>
+
+            @*<div class="form-group col-md-1">
+                <label>Giá</label>
+                <input type="number" class="form-control mb-1" value="0">
+                <span class=" alert-danger"></span>
+            </div>*@
+
+            <div class="form-group col-md-1 mb-1">
+                <label>Keo</label>
+                <select type="text" class="form-control">
+                    <option>Arcrylic</option>
+                    <option>Hotmelt</option>
+                </select>
+                <span class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label >Mục đích dùng</label>
+                <input type="text" class="form-control mb-1"  />
+                <span  class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-1 mb-2">
+                <label>Đế</label>
+                 <select type="text" class="form-control">
+                    <option>Kraft vàng</option>
+                    <option>Glassine</option>
+                </select>
+               
+                <span class=" alert-danger"></span>
+            </div>
+          @*  <div class="form-group col-md-1">
+                <label >Mã giấy</label>
+                <input type="text" class="form-control mb-1"  />
+                <span  class=" alert-danger"></span>
+            </div>*@
+            <div class="form-group col-md-2 mb-1">
+                <label>Độ dày mặt (µm)</label>
+                <input type="number" class="form-control" value="0">
+                <span class=" alert-danger"></span>
+            </div>
+
+              <div class="form-group col-md-1">
+                <label >Khổ giấy</label>
+                <input type="number" value="0" class="form-control mb-1">
+                <span  class=" alert-danger"></span>
+                </div>
+
+
+            <div class="form-group col-md-2 mb-1">
+                <label>Độ dày đế keo</label>
+                 <input type="number" class="form-control">
+                <span class=" alert-danger"></span>
+            </div>
+            <div class="form-group col-md-2 mb-1">
+                <label>Độ dày đế</label>
+                <input type="number" class="form-control" value="0">
+                <span class=" alert-danger"></span>
+            </div>
+
+            @*<div class="form-group col-md-1 mb-1">
+                <label asp-for="NumberStackColor"></label>
+                <input type="number" class="form-control" value="0" asp-for="NumberStackColor">
+                <span asp-validation-for="NumberStackColor" class=" alert-danger"></span>
+                </div>*@
+
+             <div class="form-group col-md-1 mb-1">
+                <label >ĐVT</label>
+                <input type="text" class="form-control mb-1" />
+                <span class=" alert-danger"></span>
+                </div>
+
+
+            <div class="form-group col-md-1">
+                <label>Tổng độ dày</label>
+                <input type="number" class="form-control mb-1" value="0">
+                <span class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1">
+                <label>Định lượng giấy</label>
+                <input type="number" class="form-control mb-1" value="0" />
+                <span class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label >Ghi chú</label>
+                <textarea type="text" class="form-control mb-1"  ></textarea>
+                <span  class=" alert-danger"></span>
+            </div>
+
+            <div class="form-group col-md-1">
+                <label >Lõi</label>
+                <input type="text" class="form-control mb-1"  />
+                <span  class=" alert-danger"></span>
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+@*//for front end validations*@
+
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+
+}
+<script src="~/js/jquery-searchbox.js"></script>
+<script src="~/js/jsControllers/Manager/CreatePaper.js"></script>
+}

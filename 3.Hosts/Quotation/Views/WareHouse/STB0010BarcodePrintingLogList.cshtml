@@ -1,0 +1,696 @@
+﻿@using ViewModels.Common
+@model ApiResult<IEnumerable<ViewModels.Catalog.STB0010_BARCODE_Printing_Logs.STB0010_BARCODE_Printing_LogViewModel>>
+@section Scripts{
+   @* <script src="~/js/jsControllers/knifeController/Index.js"></script>*@
+}
+
+
+<div class="row">
+    <div class="col-8">
+        @* <h1>@ViewData["Title"]</h1>*@
+        <h1>Danh sách LOT nhập NVL</h1>
+    </div>
+    @* <div class="col-4 d-flex justify-content-center">
+        @if (TempData["ResultOk"] != null)
+        {
+        <h4 aria-hidden="true" id="alertMesss" class="alert-success">@TempData["ResultOk"]</h4>
+        }
+        else
+        {
+        <h4 type="button" class="close" data-dismiss="alert" aria-label="Close">
+        </h4>
+        }
+        </div>*@
+    <div class="container-fluid">
+        <div class="row">
+
+            <form method="get" enctype="multipart/form-data" class="mb-1 w-100">
+                <div class="row">
+                    @*<div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Chất liệu</div>
+                        <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">
+                        <input type="text" class="form-control border-0 small" name="material" id="material" value="@ViewData["material"]" aria-describedby="basic-addon2" />
+                        </div>
+                    <div class="col-sm-1 col-md-1 col-lg-1 col-xl-1 float-right">Mã NVL</div>
+                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 float-right">
+                        @Html.DropDownList("typeSearch", null, new { @class = "form-control d-sm-inline-block", @id = "matGroupSearch", @name = "matGroupSearch" })
+
+                    </div>
+
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3 float-right">
+                        @* <button class="btn btn-primary" type="submit" id="btnSearch">
+                            Tìm kiếm
+                            </button>
+                        <a class="btn btn-success" onclick="show(0)" data-toggle="modal" data-target="#myModal">
+                            Thêm mới
+                        </a>
+
+
+                        @* @if (Model.Count() > 0)
+                            {
+                            <a class="btn btn-info ml-2" id="btnExport">
+                            Export Excel
+                            </a>
+                            }
+                    </div>*@
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class=" table-responsive tableFixHead" style="max-height:750px; overflow-y:scroll;">
+        <table class="table table-bordered  table-hover" cellspacing="0" width="100%" style="overflow-x:scroll;  border-spacing: 0px;" id="table_id">
+            <thead>
+                <tr>
+                    <th scope="col"><b style="opacity:0%;">......</b>#<b style="opacity:0%;">......</b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>LOTNO<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>MãNVL<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Mãquảnlý<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>STTbắtđầu<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>STTkếtthúc<b style="opacity:0%;"></b></th>
+                    <th scope="col"><b style="opacity:0%;"></b>Thờigian<b style="opacity:0%;"></b></th>
+                   <th scope="col"><b style="opacity:0%;"></b>Người xuất<b style="opacity:0%;"></b></th>
+                   @* <th scope="col"><b style="opacity:0%;"></b>Ghichú<b style="opacity:0%;"></b></th>*@
+
+                </tr>
+            </thead>
+            <tbody style="font-size:12px;">
+
+                @*<tr class="@(item.IsDeleted == true?"text-danger":"")">*@
+                @if (Model.ResultObj.Count() > 0)
+                {
+                    @foreach (var item in Model.ResultObj)
+                    {
+                        <tr class="">
+                            <td class="p-0 text-center" style="font-size:10px; line-height:13px;">
+                                @*<a class="btn btn-sm btn-info" onclick="showExport(@item.ID)" data-toggle="modal" data-target="#exportModal">Xuất file in barcode</a>*@
+
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.LotNo
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.MatCD
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.MaterialCode
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.ExportQuantityStart
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.ExportQuantityEnd
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.CreatedDate.ToString("dd-MM-yyyy HH:mm")
+                            </td>
+                            <td class="p-0 text-center">
+                                @item.EmployeeID
+                            </td>
+
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="4">Không có dữ liệu</td></tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@*<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-xl modal-lg model-sm">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <div class="modal-body container">
+                <h3 class="plan-title text-center">Đăng ký LOT nhập NVL</h3>
+                <div class="row general">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-sm-12 mb-8">
+
+                        <div class="edit-form">
+                            <div class="form-row">
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1">
+                                    <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="ID" value="0" />
+                                    <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="matCD" value="0" />
+                                </div>
+
+                                <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                                    <label class="control-label  label-text">Mã NVL:</label>
+                                    @*Html.DropDownList("codeLevel1", null, new { @class = "form-control d-sm-inline-block", @id = "codeLevel1", @name = "codeLevel1" })*@
+                                    @*Html.DropDownList("matCDList", null, new { @class = "form-control d-sm-inline-block", @id = "matCDList", @name = "matCDList", @onchange="setValue()" })
+                                    @*<input class="form-inline form-control  d-sm-inline-block" id="matGroup" maxlength="20"  />
+                                </div>
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label label-text">Loại:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="matGroupCD" maxlength="1" disabled="disabled" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label label-text">Mã quản lý:</label>
+                                    <input class="form-inline form-control  d-sm-inline-block" id="materialCode" maxlength="50" disabled="disabled" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">NCC:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="supplier" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">LOT NCC:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="supplyLot" maxlength="25" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Số lượng:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="quantity" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Đơn vị:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="unit" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Số lượng mỗi đơn vị:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="unitQuantity" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Ngày sản xuất:</label>
+                                    <input type="date" class="form-inline form-control  d-sm-inline-block" id="productDate" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Hạn dùng:</label>
+                                    <input type="date" class="form-inline form-control  d-sm-inline-block" id="expireDate" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Ngày nhập:</label>
+                                    <input type="date" class="form-inline form-control  d-sm-inline-block" id="importDate" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Số lượng nhập LOT:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="inEAQuantity" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Ngày test:</label>
+                                    <input type="date" class="form-inline form-control  d-sm-inline-block" id="testDate" />
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Kết quả test:</label>
+                                    <input type="checkbox" class="form-inline form-control  d-sm-inline-block" id="testResult">
+                                </div>
+
+                                <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2  mb-1">
+                                    <label class="control-label  label-text">Giá:</label>
+                                    <input type="number" class="form-inline form-control  d-sm-inline-block" id="price" />
+                                </div>
+
+                                <div class="form-group col-md-4 col-lg-4 col-sm-4 col-xl-4  mb-1">
+                                    <label class="control-label  label-text">Ghi chú:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="note" />
+                                </div>
+
+                                <div class="form-group col-md-4 col-lg-4 col-sm-4 col-xl-4  mb-1">
+                                    <label class="control-label  label-text">Size:</label>
+                                    <input type="text" class="form-inline form-control  d-sm-inline-block" id="size" />
+                                </div>
+
+                            </div>
+
+                            <div class="form-group" id="action">
+                                <input type="button" value="Lưu" onclick="save();" class="btn btn-primary" />
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@*<div id="exportModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xuất barcode</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body container">
+                <div class="form-row">
+                    <div class="form-group col-md-2 col-lg-2 col-sm-2 col-xl-2 mb-1 d-none">
+                        <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="exportID" value="0" />
+                         <input class="form-inline form-control   d-sm-inline-block" type="hidden" disabled="disabled" id="maxQuantity" value="0" />
+                    </div>
+
+                    <div class="form-group col-md-5 col-lg-5 col-sm-5 col-xl-5  mb-1">
+                        <label class="control-label  label-text">Số LOT:</label>
+                        <input type="text" class="form-inline form-control  d-sm-inline-block" id="exportLotNo" />
+                    </div>
+
+                    <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                        <label class="control-label  label-text">Mã NVL:</label>
+                        <input type="text" class="form-inline form-control  d-sm-inline-block" id="exportMatCD" />
+                    </div>
+
+                    <div class="form-group col-md-4 col-lg-4 col-sm-4 col-xl-4  mb-1">
+                        <label class="control-label  label-text">Mã quản lý:</label>
+                        <input type="text" class="form-inline form-control  d-sm-inline-block" id="exportMaterialCode" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                        <label class="control-label  label-text">STT bắt đầu:</label>
+                        <input type="number" class="form-inline form-control  d-sm-inline-block" id="exportOrdinalStart" onchange="checkQuantity()"/>
+                    </div>
+
+                    <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                        <label class="control-label  label-text">STT kết thúc:</label>
+                        <input type="number" class="form-inline form-control  d-sm-inline-block" id="exportOrdinalEnd" onchange="checkQuantity()"/>
+                    </div>
+                    <div class="form-group col-md-3 col-lg-3 col-sm-3 col-xl-3  mb-1">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnExport" class="btn btn-primary" onclick="exportLOTNO()">Xuất</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<script type="text/javascript">
+    function show(id) {
+
+       if(id == 0){
+            $('#ID').val(0);
+
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+
+            $("#matCD > [value='0']").attr("selected",true);
+            $("#matGroupCD").val("");//.prop("disabled", false)
+            //$("#matGroup").prop("disabled", false);
+            $("#materialCode").val("");//.prop("disabled", false)
+            $("#supplier").val("");
+            $("#supplyLot").val("");
+            $("#quantity").val(0);
+            $("#unit").val("");
+            $("#inEAQuantity").val(0);
+            $("#productDate").val(today);
+            $("#expireDate").val(today);
+            $("#importDate").val(today);
+            $("#testDate").val(today);
+            $("#testResult").prop('checked', false);
+            $("#note").val("");
+
+            $("#unitQuantity").val(0);
+            $("#price").val(0);
+            //$("#codeLevel2 > [value='0']").attr("selected",true);
+       }
+       else{
+       var url = "/WareHouse/STA0010MaterialMasterDetail/" + id;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+            console.log(mess);
+            $('#ID').val(mess.resultObj.id);
+
+            $("#matCD").prop("disabled", true).val(mess.resultObj.matcd);
+            $("#matGroup > [value='"+ mess.resultObj.matgroupcd +"']").attr("selected",true);
+            $("#matGroup").prop("disabled", true);
+            $("#materialCode").prop("disabled", true).val(mess.resultObj.materialCode);
+            $("#materialName").val(mess.resultObj.materialName);
+            $("#note").val(mess.resultObj.note);
+            $("#unit").val(mess.resultObj.unit);
+            $("#unitQuantity").val(mess.resultObj.unitQty);
+            $("#price").val(mess.resultObj.price);
+
+            //$("#codeLevel1 > [value='"+ mess.resultObj.idLevel1 +"']").attr("selected",true);
+        },
+        error: function (err) {
+            alert("Error: " + err.responseText);
+        }
+
+    });
+    }
+
+    }
+</script>
+
+<script type="text/javascript">
+    function showExport(id) {
+
+       if(id == 0){
+            $('#exportID').val(0);
+
+
+            $("#exportLotNo").val("");
+            $("#exportMatCD").val("");
+            $("#exportMaterialCode").val("");
+
+            $("#exportOrdinalStart").val(1);
+            $("#exportOrdinalEnd").val(0);
+            //$("#codeLevel2 > [value='0']").attr("selected",true);
+       }
+       else{
+       var url = "/WareHouse/STA0020MaterialSupplierLOTNODetail/" + id;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+            console.log(mess);
+            $('#exportID').val(mess.resultObj.id);
+
+            $("#exportMatCD").prop("disabled", true).val(mess.resultObj.matCD);
+            //$("#matGroup > [value='"+ mess.resultObj.matgroupcd +"']").attr("selected",true);
+            //$("#matGroup").prop("disabled", true);
+            $("#exportMaterialCode").val(mess.resultObj.materialCode);
+            $("#exportLotNo").val(mess.resultObj.lotNo);
+            $("#exportOrdinalStart").val(1);
+            $("#exportOrdinalEnd").val(mess.resultObj.inEAQuantity);
+            $("#maxQuantity").val(mess.resultObj.inEAQuantity);
+
+            //$("#codeLevel1 > [value='"+ mess.resultObj.idLevel1 +"']").attr("selected",true);
+        },
+        error: function (err) {
+            alert("Error: " + err.responseText);
+        }
+
+    });
+    }
+
+    }
+</script>
+
+<script type="text/javascript">
+    
+      function checkQuantity(){
+          var inputQuantityStart = $('#exportOrdinalStart').val();
+          var inputQuantityEnd = $('#exportOrdinalEnd').val();
+          var maxQuantity =  $('#maxQuantity').val();
+
+          if(parseInt(inputQuantityEnd)> parseInt(maxQuantity)  || parseInt(inputQuantityEnd) <=0)
+          {
+              console.log("1 start: " + inputQuantityStart + " end: " + inputQuantityEnd );
+              alert("Số lượng tối đa được xuất của LOT này phải lớn hơn 0 và không được vượt quá: " + maxQuantity);
+               $('#exportOrdinalEnd').val(maxQuantity);
+               
+          }
+
+          if(parseInt(inputQuantityStart)> parseInt(maxQuantity) || parseInt(inputQuantityStart) <=0)
+          {
+              console.log("2 start: " + inputQuantityStart + " end: " + inputQuantityEnd );
+              alert("Số lượng tối thiểu được xuất của LOT này phải lớn hơn 0 và không được vượt quá: " + maxQuantity);
+               $('#exportOrdinalStart').val(1);
+
+          }
+      }
+
+        function setValue(){
+                var matGroupID = $("#matCDList option:selected").val();
+
+            var url = "/WareHouse/STA0010MaterialMasterDetail/" + matGroupID;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        async: true,
+        //data: data,
+        // async: false,
+        contentType: 'application/json; charset=utf-8',
+        success: function (mess) {
+            console.log(mess);
+            //$('#ID').val(mess.resultObj.id);
+
+            $("#matCD").prop("disabled", true).val(mess.resultObj.matcd);
+            //$("#matGroup > [value='"+ mess.resultObj.matgroupcd +"']").attr("selected",true);
+            $("#matGroupCD").val(mess.resultObj.matgroupcd == "P"?"Giấy":mess.resultObj.matgroupcd == "K"?"Dao":"Khác").prop("disabled", true);
+            $("#materialCode").prop("disabled", true).val(mess.resultObj.materialCode);
+            //$("#materialName").val(mess.resultObj.materialName);
+            //$("#note").val(mess.resultObj.note);
+            $("#unit").val(mess.resultObj.unit);
+            $("#unitQuantity").val(mess.resultObj.unitQty);
+            $("#price").val(mess.resultObj.price);
+
+            //$("#codeLevel1 > [value='"+ mess.resultObj.idLevel1 +"']").attr("selected",true);
+        },
+        error: function (err) {
+            alert("Error: " + err.responseText);
+        }
+
+    });
+            }
+</script>
+
+<script type="text/javascript">
+
+        function save() {
+        if (confirm("Bạn có chắc chắn muốn lưu?") == true) {
+            var data = new FormData();
+            //var fileUpload = $("#attachment").get(0);
+            //var countFile = $("#attachment")[0].files.length;
+            //var files = fileUpload.files;
+             var id = $("#ID").val();
+             var url;
+             if(id <= 0)
+             {
+                  url = "/WareHouse/CreateSTA0020MaterialSupplier";
+                  method ="POST";
+             }
+             else{
+                  url = "/WareHouse/UpdateSTA0020MaterialMaster/"+id;
+                   method ="POST";
+             }
+
+            var matCD = $("#matCDList option:selected").text();
+            var matGroupCD = $("#matGroupCD").val();
+            var materialCode = $("#materialCode").val();
+            //var materialName = $("#materialName").val();
+            var supplier = $("#supplier").val();
+            var supplyLot = $("#supplyLot").val();
+            var quantity = $("#quantity").val();
+            var inEAQuantity = $("#inEAQuantity").val();
+            var productDate = $("#productDate").val();
+            var expireDate = $("#expireDate").val();
+            var importDate = $("#importDate").val();
+            var testDate = $("#testDate").val();
+            var testResult = $("#testResult:checked:enabled").val();
+            var note = $("#note").val();
+            var unit = $("#unit").val();
+            var unitQuantity = $("#unitQuantity").val();
+            var price = $("#price").val();
+            var size = $("#size").val();
+
+            var model;
+            if(id>0)
+            {
+                model = { ID: id, MaterialName:materialName, Note:note, Unit:unit, UnitQty:unitQuantity, Price:price};
+            }
+            else
+            {
+                model = { ID: id, MatCD:matCD, Supplier: supplier, SupLOT: supplyLot, InEAQuantity:inEAQuantity, UnitQuantity:unitQuantity, ProductDate:productDate, ImportDate:importDate, TestDate:testDate, TestResult:testResult,ExpiredDate:expireDate , MaterialCode:materialCode,  Note:note, Unit:unit, Price:price, Size:size};
+            }
+
+
+            console.log(model);
+            $.ajax({
+                type: method,
+                url: url,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(model),
+                async: true,
+                success: function (mess) {
+                    if (mess.isSuccessResult == false) {
+                        $("#msg").removeClass("text-success");
+                        $("#msg").addClass("text-danger");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                    }
+                    else {
+                        $("#msg").removeClass("text-danger");
+                        $("#msg").addClass("text-success");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                        location.reload();
+                    }
+
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+
+                },
+                error: function (err) {
+
+                    $("#msg").removeClass("text-success");
+                    $("#msg").addClass("text-danger");
+                    $("#msg").html("Error: " + err);
+                    alert(err.responseText);
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+                }
+
+            });
+        }
+    }
+</script>
+
+<script type="text/javascript">
+
+        function exportLOTNO() {
+        if (confirm("Bạn có chắc chắn muốn xuất file?") == true) {
+            var data = new FormData();
+            //var fileUpload = $("#attachment").get(0);
+            //var countFile = $("#attachment")[0].files.length;
+            //var files = fileUpload.files;
+             var exportID = $("#exportID").val();
+             var url;
+          
+             url = "/WareHouse/CreateSTB0010BarcodePrintingLog";
+             method ="POST";
+             
+            var exportLotNo = $("#exportLotNo").val();
+            var exportMaterialCode = $("#exportMaterialCode").val();
+            var exportMatCD = $("#exportMatCD").val();
+            var exportOrdinalStart = $("#exportOrdinalStart").val();
+            var exportOrdinalEnd = $("#exportOrdinalEnd").val();
+           
+            var model;
+           
+            model = { STA0020_Material_Supplier_LotnoID: exportID, MaterialCode:exportMaterialCode, LotNo:exportLotNo, MatCD:exportMatCD, ExportQuantityStart:exportOrdinalStart, ExportQuantityEnd:exportOrdinalEnd, EmployeeID:'Test'};
+            
+            console.log(model);
+            $.ajax({
+                type: method,
+                url: url,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(model),
+                async: true,
+                //beforeSend: function(){
+                //    startLoader();
+                //},
+                success: function (mess) {
+                    if (mess.isSuccessResult == false) {
+                     
+                        //var blob = new Blob([response], {type: "application/ms-excel"});
+                        //var downloadUrl = URL.createObjectURL(blob);
+                        //var a = document.createElement("a");
+                        //a.href = downloadUrl;
+                        //a.download = "ReportFile.xls";
+                        //document.body.appendChild(a);
+                        //a.click();
+                         //window.location.href = "Url.RouteUrl(new { Controller = "WareHouse", Action = "Download" })"; //?fileName=" + data.fileName;
+
+                        alert(mess.result);
+                    }
+                    else {
+                         window.location.href = "@Url.RouteUrl(new { Controller = "WareHouse", Action = "Download" })"; //?fileName=" + data.fileName;
+                        $("#msg").removeClass("text-danger");
+                        $("#msg").addClass("text-success");
+                        $("#msg").html(mess.result);
+                        alert(mess.result);
+                        location.reload();
+                    }
+
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+
+                },
+                //complete: function(){
+                //    stopLoader();
+                //},
+                error: function (err) {
+
+                    $("#msg").removeClass("text-success");
+                    $("#msg").addClass("text-danger");
+                    $("#msg").html("Error: " + err);
+                    alert(err.responseText);
+                    //setTimeout(function () {// wait for 5 secs(2)
+                    //    location.reload(); // then reload the page.(3)
+                    //}, 5000);
+                }
+
+            });
+        }
+    }
+
+    //funtion startLoader(){
+    //    $('#btnExport').text('Vui lòng đợi ...');
+    //    $('#btnExport').attr('Disabled', true);
+    //}
+
+    //funtion stopLoader(){
+    //    $('#btnExport').text('Xuất');
+    //    $('#btnExport').attr('Disabled', false);
+    //}
+</script>
+
+
+@section CSS{
+<link href="~/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+@*<link href="~/css/viewTable.css" rel="stylesheet" />*@
+<style>
+    /*on top header */
+    .tableFixHead {
+        overflow: auto;
+        height: auto;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+    /* Just common table stuff. Really. */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px 16px;
+    }
+
+    th {
+        background: #eee;
+    }
+</style>
+}
